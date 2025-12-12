@@ -1,4 +1,4 @@
-package controllers;
+package org.noa.hospitaleo.controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,6 +22,7 @@ public class MenuController {
         }catch(IOException ex)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za upravljanje doktorima");
+            ex.printStackTrace();
         }
 
     }

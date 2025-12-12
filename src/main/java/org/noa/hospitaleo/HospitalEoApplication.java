@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.noa.hospitaleo.repository.MockEntitiyRepository;
 
 import java.io.IOException;
 
@@ -13,6 +14,8 @@ public class HospitalEoApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        MockEntitiyRepository mockRepository=new  MockEntitiyRepository();
+        mockRepository.loadAll();
         mainStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("main-screen.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
