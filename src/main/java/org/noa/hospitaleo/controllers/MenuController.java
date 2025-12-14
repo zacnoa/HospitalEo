@@ -54,7 +54,22 @@ public class MenuController {
             stage.show();
         }catch(IOException ex)
         {
-
+            DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju glavnog ekrana");
+        }
+    }
+    public void showDepartmentOverviewScreen()
+    {
+        Stage stage = HospitalEoApplication.getMainStage();
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("department-overview-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Department Overview");
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException ex)
+        {
+            DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za pregled odjeljka");
+            ex.printStackTrace();
         }
     }
 
