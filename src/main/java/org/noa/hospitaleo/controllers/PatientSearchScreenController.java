@@ -12,8 +12,7 @@ import org.noa.hospitaleo.repository.MockEntitiyRepository;
 import util.DialogUtils;
 
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class PatientSearchScreenController {
 
@@ -66,7 +65,7 @@ public class PatientSearchScreenController {
         String name = patientName.getText();
         String oib = patientOIB.getText();
         String diagnosis = patientDiagnosis.getText();
-        List<Patient> result = new ArrayList<>();
+
 
         if (name.isEmpty() && oib.isEmpty() && diagnosis.isEmpty()) {
             DialogUtils.showSearchScreenErrorDialog("Molim vas ispunite barem jedno polje");
@@ -74,12 +73,14 @@ public class PatientSearchScreenController {
         }
 
         else {
-            result=MockEntitiyRepository.patientStorage.values().stream()
-                    .filter(d -> name.isEmpty() || d.getName().toLowerCase().contains(name.toLowerCase()))
-                    .filter(d -> oib.isEmpty() || d.getOib().equals(oib))
-                    .filter(d -> diagnosis.isEmpty() || d.getDiagnosis().toLowerCase().contains(diagnosis.toLowerCase()))
-                    .toList();
-            ObservableList<Patient> observableList = FXCollections.observableList(result);
+
+            ObservableList<Patient> observableList = FXCollections.observableList(
+                    MockEntitiyRepository.allPatientsAsList().stream()
+                            .filter(d -> name.isEmpty() || d.getName().toLowerCase().contains(name.toLowerCase()))
+                            .filter(d -> oib.isEmpty() || d.getOib().equals(oib))
+                            .filter(d -> diagnosis.isEmpty() || d.getDiagnosis().toLowerCase().contains(diagnosis.toLowerCase()))
+                            .toList()
+            );
             patientTable.setItems(observableList);
         }
 

@@ -1,23 +1,22 @@
 package org.noa.hospitaleo.controllers;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
+
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
+
+
 import org.noa.hospitaleo.entity.Doctor;
 import org.noa.hospitaleo.repository.MockEntitiyRepository;
 import util.DialogUtils;
 
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class DoctorSearchScreenController {
 
@@ -70,7 +69,7 @@ public class DoctorSearchScreenController {
             String name = doctorName.getText();
             String oib = doctorOIB.getText();
             String specialty = doctorSpecialty.getText();
-            List<Doctor> result = new ArrayList<>();
+
 
             if (name.isEmpty() && oib.isEmpty() && specialty.isEmpty()) {
                 DialogUtils.showSearchScreenErrorDialog("Molim vas ispunite barem jedno polje");
@@ -78,12 +77,13 @@ public class DoctorSearchScreenController {
             }
 
             else {
-                result=MockEntitiyRepository.doctorStorage.values().stream()
-                        .filter(d -> name.isEmpty() || d.getName().toLowerCase().contains(name.toLowerCase()))
-                        .filter(d -> oib.isEmpty() || d.getOib().equals(oib))
-                        .filter(d -> specialty.isEmpty() || d.getSpecialty().toLowerCase().contains(specialty.toLowerCase()))
-                        .toList();
-                ObservableList<Doctor> observableList = FXCollections.observableList(result);
+                ObservableList<Doctor> observableList = FXCollections.observableList(
+                                MockEntitiyRepository.allDoctorsAsList().stream()
+                                        .filter(d -> name.isEmpty() || d.getName().toLowerCase().contains(name.toLowerCase()))
+                                        .filter(d -> oib.isEmpty() || d.getOib().equals(oib))
+                                        .filter(d -> specialty.isEmpty() || d.getSpecialty().toLowerCase().contains(specialty.toLowerCase()))
+                                        .toList()
+                        );
                 doctorTable.setItems(observableList);
             }
 

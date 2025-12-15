@@ -37,7 +37,7 @@ public class MenuController {
             stage.setTitle("Patient Search");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException ex)
+        }catch(IOException _)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za upravljanje pacijentima");
         }
@@ -52,7 +52,7 @@ public class MenuController {
             stage.setTitle("Home");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException ex)
+        }catch(IOException _)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju glavnog ekrana");
         }
@@ -66,10 +66,9 @@ public class MenuController {
             stage.setTitle("Department Overview");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException ex)
+        }catch(IOException _)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za pregled odjeljka");
-            ex.printStackTrace();
         }
     }
 

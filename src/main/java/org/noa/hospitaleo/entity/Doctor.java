@@ -6,11 +6,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.noa.hospitaleo.interfaces.PrintableMenuSelection;
 import org.noa.hospitaleo.repository.JSONEntityRepository;
 
 
-public final class Doctor extends Employee implements PrintableMenuSelection, Serializable {
+public final class Doctor extends Employee implements  Serializable {
 
     private String specialty;
     private List<String> patientIds = new ArrayList<>();
@@ -19,7 +18,7 @@ public final class Doctor extends Employee implements PrintableMenuSelection, Se
     public Doctor() {}
 
     private Doctor(DoctorBuilder doctorBuilder) {
-        super(doctorBuilder.name, doctorBuilder.OIB, doctorBuilder.salary);
+        super(doctorBuilder.name, doctorBuilder.oib, doctorBuilder.salary);
         this.specialty = doctorBuilder.specialty;
         this.patientIds = doctorBuilder.patients;
     }
@@ -60,21 +59,18 @@ public final class Doctor extends Employee implements PrintableMenuSelection, Se
     }
 
 
-    @Override
-    public void basicInformation() {
-        System.out.println("Doktor: " + super.getName() + " specijalizacija: " + specialty);
-    }
+
 
     public static class DoctorBuilder {
         private String name;
-        private String OIB;
+        private String oib;
         private String specialty;
         private Double salary;
         private List<String> patients = new ArrayList<>();
 
-        public DoctorBuilder(String name, String OIB, String specialty, Double salary) {
+        public DoctorBuilder(String name, String oib, String specialty, Double salary) {
             this.name = name;
-            this.OIB = OIB;
+            this.oib = oib;
             this.specialty = specialty;
             this.salary = salary;
         }

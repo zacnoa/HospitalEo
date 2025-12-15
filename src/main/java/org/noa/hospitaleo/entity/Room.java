@@ -1,7 +1,6 @@
 package org.noa.hospitaleo.entity;
 
 import jakarta.json.bind.annotation.JsonbTransient;
-import org.noa.hospitaleo.interfaces.PrintableMenuSelection;
 import org.noa.hospitaleo.repository.JSONEntityRepository;
 
 import java.io.Serializable;
@@ -13,7 +12,7 @@ import java.util.UUID;
  * Predstavlja sobu
  */
 
-public class Room implements PrintableMenuSelection, Serializable {
+public class Room implements  Serializable {
 
     private List<String> patients;
     private String id;
@@ -74,9 +73,5 @@ public class Room implements PrintableMenuSelection, Serializable {
         patients.add(patient.getId());
     }
 
-    @JsonbTransient
-    @Override
-    public String getSelectionLine() {
-        return this.id;
-    }
+
 }

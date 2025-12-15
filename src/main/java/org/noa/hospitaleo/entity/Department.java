@@ -2,7 +2,6 @@ package org.noa.hospitaleo.entity;
 
 
 import jakarta.json.bind.annotation.JsonbTransient;
-import org.noa.hospitaleo.interfaces.PrintableMenuSelection;
 import org.noa.hospitaleo.repository.JSONEntityRepository;
 
 import java.io.Serializable;
@@ -10,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class Department implements PrintableMenuSelection, Serializable {
+public class Department implements  Serializable {
 
     private String name;
 
@@ -132,33 +131,10 @@ public class Department implements PrintableMenuSelection, Serializable {
     }
 
 
-
-    public List<Doctor> doctorSearchBySpecialty(Scanner sc) {
-        System.out.println("Unesite traženu specijalizaciju");
-        String specialty = sc.nextLine();
-        return getDoctors().stream().filter(d -> specialty.equals(d.getSpecialty())).toList();
-    }
-
-
-    public List<Patient> patientSearchByDiagnosis(Scanner sc) {
-        System.out.println("Unesite traženu dijagnozu");
-        String diagnosis = sc.nextLine();
-        return getPatients().stream().filter(p -> diagnosis.equals(p.getDiagnosis())).toList();
-    }
-
     public Map<String, List<Patient>> groupByDoctor() {
         return getPatients().stream().collect(Collectors.groupingBy(p -> p.getDoctor().getName()));
     }
 
-    @JsonbTransient
-    public String getSelectionLine() {
-        return name;
-    }
 
-    public Optional<Patient> findPatientByName(String name) {
-        return Optional.of(getPatients().stream()
-                .filter(p -> name.equalsIgnoreCase(p.getName()))
-                .findAny()
-                .orElseThrow(NoSuchElementException::new));
-    }
+
 }

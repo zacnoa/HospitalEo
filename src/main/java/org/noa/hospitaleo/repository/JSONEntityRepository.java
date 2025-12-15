@@ -8,11 +8,11 @@ import org.noa.hospitaleo.entity.*;
 
 public class JSONEntityRepository implements EntitiyRepository {
 
-    public static Map<String,Doctor> doctorStorage=new HashMap<>();
-    public static Map<String,Patient> patientStorage=new HashMap<>();
-    public static Map<String,Room> roomStorage=new HashMap<>();
-    public static Map<String,Visitor> visitorStorage =new HashMap<>();
-    public static List<Department> departmentStorage=new ArrayList<>();
+    protected static final Map<String,Doctor> doctorStorage=new HashMap<>();
+    protected static final Map<String,Patient> patientStorage=new HashMap<>();
+    protected static final Map<String,Room> roomStorage=new HashMap<>();
+    protected static final Map<String,Visitor> visitorStorage =new HashMap<>();
+    protected static final List<Department> departmentStorage=new ArrayList<>();
 
 
     public static Doctor findDoctor(String id)
@@ -85,14 +85,11 @@ public class JSONEntityRepository implements EntitiyRepository {
     {
         return departmentStorage;
     }
-    public static void setDepartmentStorage(List<Department> departments)
-    {
-       departmentStorage=departments;
-    }
+
 
 
     @Override
     public void loadAll() {
-
+        // Dodat cemo kasnije
     }
 }

@@ -17,8 +17,5 @@ public class Visitor extends Person implements Serializable {
     public Visitor() {
     }
 
-    @Override
-    public void basicInformation() {
-        System.out.println("Posjetitelj:" + super.getName() + " " + super.getOib());
-    }
+
 }

@@ -10,10 +10,11 @@ import java.io.IOException;
 
 public class HospitalEoApplication extends Application {
 
-    private static Stage mainStage;
+    private static  Stage mainStage;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    @SuppressWarnings("java:S2696") // Nemozemo promijeniti signature metode posto radimo override
+    public  void start(Stage stage) throws IOException {
         MockEntitiyRepository mockRepository=new  MockEntitiyRepository();
         mockRepository.loadAll();
         mainStage = stage;

@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class MockEntitiyRepository implements EntitiyRepository {
 
-    public static Map<String, Doctor> doctorStorage=new HashMap<>();
-    public static Map<String, Patient> patientStorage=new HashMap<>();
-    public static Map<String, Room> roomStorage=new HashMap<>();
-    public static Map<String, Visitor> visitorStorage =new HashMap<>();
-    public static List<Department> departmentStorage=new ArrayList<>();
+    protected  static final Map<String, Doctor> doctorStorage=new HashMap<>();
+    protected  static final Map<String, Patient> patientStorage=new HashMap<>();
+    protected  static final Map<String, Room> roomStorage=new HashMap<>();
+    protected   static final Map<String, Visitor> visitorStorage =new HashMap<>();
+    protected   static final List<Department> departmentStorage=new ArrayList<>();
 
 
     public static Doctor findDoctor(String id)
@@ -87,10 +87,6 @@ public class MockEntitiyRepository implements EntitiyRepository {
     {
         return departmentStorage;
     }
-    public static void setDepartmentStorage(List<Department> departments)
-    {
-        departmentStorage=departments;
-    }
 
 
     @Override
@@ -110,10 +106,9 @@ public class MockEntitiyRepository implements EntitiyRepository {
         Room d1Room1 = new Room();
         d1.addRoom(d1Room1);
 
-        Patient d1Patient1 = new Patient.PatientBuilder("Luka Lukacevic", "129495", "java", PatientStatus.HOSPITALIZED)
-                .doctor(d1Doc1)
-                .room(d1Room1)
-                .build();
+        Patient d1Patient1 = new Patient("Luka Lukacevic", "129495", "java", PatientStatus.HOSPITALIZED);
+        d1Patient1.setDoctor(d1Doc1);
+        d1Patient1.setRoom(d1Room1);
         d1.addPatient(d1Patient1);
 
 
@@ -128,10 +123,9 @@ public class MockEntitiyRepository implements EntitiyRepository {
         Room d1Room2 = new Room();
         d1.addRoom(d1Room2);
 
-        Patient d1Patient2 = new Patient.PatientBuilder("Ana Anic", "559912", "migrena", PatientStatus.UNDER_DIAGNOSIS)
-                .doctor(d1Doc2)
-                .room(d1Room2)
-                .build();
+        Patient d1Patient2 = new Patient("Ana Anic", "559912", "migrena", PatientStatus.UNDER_DIAGNOSIS);
+        d1Patient2.setDoctor(d1Doc2);
+        d1Patient2.setRoom(d1Room2);
         d1.addPatient(d1Patient2);
 
         doctorStorage.put(d1Doc2.getId(),  d1Doc2);
@@ -145,10 +139,9 @@ public class MockEntitiyRepository implements EntitiyRepository {
         Room d2Room1 = new Room();
         d2.addRoom(d2Room1);
 
-        Patient d2Patient1 = new Patient.PatientBuilder("Petar Peric", "778899", "aritmija", PatientStatus.HOSPITALIZED)
-                .doctor(d2Doc1)
-                .room(d2Room1)
-                .build();
+        Patient d2Patient1 = new Patient("Petar Peric", "778899", "aritmija", PatientStatus.HOSPITALIZED);
+        d2Patient1.setDoctor(d2Doc1);
+        d2Patient1.setRoom(d2Room1);
         d2.addPatient(d2Patient1);
 
 
@@ -163,10 +156,9 @@ public class MockEntitiyRepository implements EntitiyRepository {
         Room d2Room2 = new Room();
         d2.addRoom(d2Room2);
 
-        Patient d2Patient2 = new Patient.PatientBuilder("Marija Marinkovic", "443322", "hipertenzija", PatientStatus.UNDER_DIAGNOSIS)
-                .doctor(d2Doc2)
-                .room(d2Room2)
-                .build();
+        Patient d2Patient2 = new Patient("Marija Marinkovic", "443322", "hipertenzija", PatientStatus.UNDER_DIAGNOSIS);
+        d2Patient2.setDoctor(d2Doc2);
+        d2Patient2.setRoom(d2Room2);
         d2.addPatient(d2Patient2);
 
         doctorStorage.put(d2Doc2.getId(),  d2Doc2);

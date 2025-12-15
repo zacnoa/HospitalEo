@@ -29,47 +29,49 @@ public class DepartmentOverviewController {
         listView.setItems(departments);
 
 
-        listView.setCellFactory(lv -> new ListCell<>() {
+        listView.setCellFactory(lv -> new DepartmentListCell());
+    }
 
-            private  Label nameLabel = new Label();
-            private  Label patientsLabel = new Label();
-            private  Label doctorsLabel = new Label();
-            private  Label roomsLabel = new Label();
+    private static class DepartmentListCell extends ListCell<Department> {
 
-            private  Region spacer = new Region();
-            private  HBox statsRow = new HBox(12, patientsLabel, doctorsLabel, roomsLabel, spacer);
-            private  VBox root = new VBox(4, nameLabel, statsRow);
+        private final Label nameLabel = new Label();
+        private final Label patientsLabel = new Label();
+        private final Label doctorsLabel = new Label();
+        private final Label roomsLabel = new Label();
 
-            {
-                nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
-                statsRow.setStyle("-fx-text-fill: -fx-text-inner-color; -fx-opacity: 0.9;");
+        private final Region spacer = new Region();
+        private final HBox statsRow = new HBox(12, patientsLabel, doctorsLabel, roomsLabel, spacer);
+        private final VBox root = new VBox(4, nameLabel, statsRow);
 
-                HBox.setHgrow(spacer, Priority.ALWAYS);
-                root.setPadding(new Insets(8, 10, 8, 10));
-            }
+        private DepartmentListCell() {
+            nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+            statsRow.setStyle("-fx-text-fill: -fx-text-inner-color; -fx-opacity: 0.9;");
 
-            @Override
-            protected void updateItem(Department dept, boolean empty) {
-                super.updateItem(dept, empty);
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+            root.setPadding(new Insets(8, 10, 8, 10));
+        }
 
-                if (empty || dept == null) {
-                    setText(null);
-                    setGraphic(null);
-                    return;
-                }
+        @Override
+        protected void updateItem(Department dept, boolean empty) {
+            super.updateItem(dept, empty);
 
-                int brojPacijenata = dept.getPatients() == null ? 0 : dept.getPatients().size();
-                int brojDoktora = dept.getDoctors() == null ? 0 : dept.getDoctors().size();
-                int brojSoba = dept.getRooms() == null ? 0 : dept.getRooms().size();
-
-                nameLabel.setText(dept.getName());
-                patientsLabel.setText("Pacijenti: " + brojPacijenata);
-                doctorsLabel.setText("Doktori: " + brojDoktora);
-                roomsLabel.setText("Sobe: " + brojSoba);
-
+            if (empty || dept == null) {
                 setText(null);
-                setGraphic(root);
+                setGraphic(null);
+                return;
             }
-        });
+
+            int brojPacijenata = dept.getPatients() == null ? 0 : dept.getPatients().size();
+            int brojDoktora = dept.getDoctors() == null ? 0 : dept.getDoctors().size();
+            int brojSoba = dept.getRooms() == null ? 0 : dept.getRooms().size();
+
+            nameLabel.setText(dept.getName());
+            patientsLabel.setText("Pacijenti: " + brojPacijenata);
+            doctorsLabel.setText("Doktori: " + brojDoktora);
+            roomsLabel.setText("Sobe: " + brojSoba);
+
+            setText(null);
+            setGraphic(root);
+        }
     }
 }

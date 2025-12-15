@@ -2,24 +2,22 @@ package org.noa.hospitaleo.entity;
 
 import jakarta.json.bind.annotation.JsonbTransient;
 import org.noa.hospitaleo.enums.PatientStatus;
-import org.noa.hospitaleo.interfaces.PrintableMenuSelection;
 import org.noa.hospitaleo.repository.JSONEntityRepository;
 
 import java.io.Serializable;
-import java.util.Optional;
 
 
-public class Patient extends Person implements PrintableMenuSelection, Serializable {
+public class Patient extends Person implements  Serializable {
 
     private String doctorId;
     private String diagnosis;
-    public PatientStatus status;
+    private PatientStatus status;
     private String roomId;
 
-    protected Patient(PatientBuilder patientBuilder) {
-        super(patientBuilder.name, patientBuilder.OIB);
-        this.diagnosis = patientBuilder.diagnosis;
-        this.status = patientBuilder.status;
+    public Patient(String name, String oib, String diagnosis, PatientStatus status) {
+        super(name, oib);
+        this.diagnosis = diagnosis;
+        this.status = status;
     }
 
     public Patient() {}
@@ -87,40 +85,4 @@ public class Patient extends Person implements PrintableMenuSelection, Serializa
 
 
 
-    @Override
-    public void basicInformation() {
-        System.out.println("Pacijent: " + super.getName() + " OIB: " + super.getOib());
-    }
-
-
-
-    public static class PatientBuilder<T extends PatientBuilder<T>> {
-        String name;
-        String OIB;
-        String diagnosis;
-        PatientStatus status;
-        Doctor doctor;
-        Room room;
-
-        public PatientBuilder(String name, String OIB, String diagnosis, PatientStatus status) {
-            this.name = name;
-            this.OIB = OIB;
-            this.diagnosis = diagnosis;
-            this.status = status;
-        }
-
-        public T doctor(Doctor doctor) {
-            this.doctor = doctor;
-            return (T) this;
-        }
-
-        public T room(Room room) {
-            this.room = room;
-            return (T) this;
-        }
-
-        public Patient build() {
-            return new Patient(this);
-        }
-    }
 }
