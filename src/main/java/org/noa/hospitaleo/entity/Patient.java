@@ -20,7 +20,7 @@ public class Patient extends Person implements  Serializable {
         this.status = status;
     }
 
-    public Patient() {}
+
 
 
     @JsonbTransient

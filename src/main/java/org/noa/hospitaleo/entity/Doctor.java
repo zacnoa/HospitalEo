@@ -15,7 +15,6 @@ public final class Doctor extends Employee implements  Serializable {
     private List<String> patientIds = new ArrayList<>();
 
 
-    public Doctor() {}
 
     private Doctor(DoctorBuilder doctorBuilder) {
         super(doctorBuilder.name, doctorBuilder.oib, doctorBuilder.salary);

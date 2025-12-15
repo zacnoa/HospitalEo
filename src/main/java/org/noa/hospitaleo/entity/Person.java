@@ -29,11 +29,6 @@ public abstract class Person implements Serializable {
 
     }
 
-    public Person() {}
-
-
-
-
     /**
      * @return Ime
      */

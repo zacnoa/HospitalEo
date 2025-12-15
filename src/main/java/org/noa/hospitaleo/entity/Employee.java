@@ -1,20 +1,14 @@
 package org.noa.hospitaleo.entity;
 
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlTransient;
-
 
 public abstract class Employee extends Person {
 
     private Double salary;
 
-    public Employee(String name, String OIB, Double salary) {
-        super(name, OIB);
+    protected Employee(String name, String oib, Double salary) {
+        super(name, oib);
         this.salary = salary;
     }
-
-    public Employee(){}
 
 
     public Double getSalary() {

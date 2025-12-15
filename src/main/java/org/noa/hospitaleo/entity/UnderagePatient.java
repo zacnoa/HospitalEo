@@ -15,7 +15,7 @@ public class UnderagePatient extends Patient{
         super(name, oib, diagnosis, status);
         this.legalGuardian=legalGuardian;
     }
-    public UnderagePatient(){}
+
 
     public Visitor getLegalGuardian()
     {
