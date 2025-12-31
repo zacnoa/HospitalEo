@@ -13,19 +13,17 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.noa.hospitaleo.entity.Department;
-import org.noa.hospitaleo.repository.MockEntitiyRepository;
+import org.noa.hospitaleo.repository.MockEntityRepository;
 
 public class DepartmentOverviewController {
 
     @FXML
     private ListView<Department> listView;
-    @FXML
-    private ObservableList<Department> departments;
 
     @FXML
     public void initialize()
     {
-        departments = FXCollections.observableList(MockEntitiyRepository.getDepartmentStorage());
+        ObservableList<Department> departments = FXCollections.observableList(MockEntityRepository.allDepartmentsAsList());
         listView.setItems(departments);
 
 

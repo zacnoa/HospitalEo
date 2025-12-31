@@ -1,7 +1,6 @@
 package org.noa.hospitaleo.entity;
 
-import jakarta.json.bind.annotation.JsonbTransient;
-import org.noa.hospitaleo.repository.JSONEntityRepository;
+import org.noa.hospitaleo.repository.RuntimeEntityRepository;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ public class Room implements  Serializable {
      */
 
     public List<Patient> getPatients() {
-        return JSONEntityRepository.getPatientsByIds(patients);
+        return RuntimeEntityRepository.getPatients(patients);
     }
 
 

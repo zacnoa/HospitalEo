@@ -2,7 +2,7 @@ package org.noa.hospitaleo.entity;
 
 
 import jakarta.json.bind.annotation.JsonbTransient;
-import org.noa.hospitaleo.repository.JSONEntityRepository;
+import org.noa.hospitaleo.repository.RuntimeEntityRepository;
 
 import java.io.Serializable;
 import java.util.*;
@@ -18,17 +18,18 @@ public class Department implements  Serializable {
     private transient List<String> roomIds = new ArrayList<>();
     private transient List<String> patientIds = new ArrayList<>();
     private transient List<String> visitorIds = new ArrayList<>();
+    private final String id;
 
 
     public Department(String name) {
         this.name = name;
+        this.id = UUID.randomUUID().toString();
     }
-
 
 
     @JsonbTransient
     public List<Doctor> getDoctors() {
-        return JSONEntityRepository.getDoctorsByIds(doctorIds);
+        return RuntimeEntityRepository.getDoctors(doctorIds);
     }
 
     @JsonbTransient
@@ -38,7 +39,7 @@ public class Department implements  Serializable {
 
     @JsonbTransient
     public List<Room> getRooms() {
-        return JSONEntityRepository.getRoomsByIds(roomIds);
+        return RuntimeEntityRepository.getRooms(roomIds);
     }
 
     @JsonbTransient
@@ -48,7 +49,7 @@ public class Department implements  Serializable {
 
     @JsonbTransient
     public List<Patient> getPatients() {
-        return JSONEntityRepository.getPatientsByIds(patientIds);
+        return RuntimeEntityRepository.getPatients(patientIds);
     }
 
     @JsonbTransient
@@ -56,6 +57,10 @@ public class Department implements  Serializable {
         this.patientIds = list.stream().map(Patient::getId).toList();
     }
 
+
+    public String getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -98,7 +103,7 @@ public class Department implements  Serializable {
 
 
     public List<Visitor> getVisitors() {
-        return JSONEntityRepository.getVisitorsByIds(visitorIds);
+        return RuntimeEntityRepository.getVisitors(visitorIds);
     }
 
 

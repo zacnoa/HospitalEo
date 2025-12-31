@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.noa.hospitaleo.repository.MockEntitiyRepository;
+import org.noa.hospitaleo.repository.MockEntityRepository;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ public class HospitalEoApplication extends Application {
     @Override
     @SuppressWarnings("java:S2696") // Nemozemo promijeniti signature metode posto radimo override
     public  void start(Stage stage) throws IOException {
-        MockEntitiyRepository mockRepository=new  MockEntitiyRepository();
+        MockEntityRepository mockRepository=new MockEntityRepository();
         mockRepository.loadAll();
         mainStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("main-screen.fxml"));

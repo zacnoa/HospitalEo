@@ -71,6 +71,21 @@ public class MenuController {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za pregled odjeljka");
         }
     }
+    public void showPatientCreationScreen()
+    {
+        Stage stage= HospitalEoApplication.getMainStage();
+        try
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("patient-creation-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Patient Creation");
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException _)
+        {
+            DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za kreiranje pacijenta");
+        }
+    }
 
 }
 

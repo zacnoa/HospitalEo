@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.noa.hospitaleo.repository.JSONEntityRepository;
+import org.noa.hospitaleo.repository.RuntimeEntityRepository;
 
 
 public final class Doctor extends Employee implements  Serializable {
@@ -26,7 +26,7 @@ public final class Doctor extends Employee implements  Serializable {
 
     @JsonbTransient
     public List<Patient> getPatients() {
-        return JSONEntityRepository.getPatientsByIds(patientIds);
+        return RuntimeEntityRepository.getPatients(patientIds);
     }
 
     @JsonbTransient

@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 
 
 import org.noa.hospitaleo.entity.Doctor;
-import org.noa.hospitaleo.repository.MockEntitiyRepository;
+import org.noa.hospitaleo.repository.MockEntityRepository;
 import util.DialogUtils;
 
 
@@ -78,7 +78,7 @@ public class DoctorSearchScreenController {
 
             else {
                 ObservableList<Doctor> observableList = FXCollections.observableList(
-                                MockEntitiyRepository.allDoctorsAsList().stream()
+                                MockEntityRepository.allDoctorsAsList().stream()
                                         .filter(d -> name.isEmpty() || d.getName().toLowerCase().contains(name.toLowerCase()))
                                         .filter(d -> oib.isEmpty() || d.getOib().equals(oib))
                                         .filter(d -> specialty.isEmpty() || d.getSpecialty().toLowerCase().contains(specialty.toLowerCase()))

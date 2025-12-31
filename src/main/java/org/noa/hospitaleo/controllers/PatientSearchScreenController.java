@@ -8,7 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.noa.hospitaleo.entity.Patient;
-import org.noa.hospitaleo.repository.MockEntitiyRepository;
+import org.noa.hospitaleo.repository.MockEntityRepository;
 import util.DialogUtils;
 
 
@@ -75,7 +75,7 @@ public class PatientSearchScreenController {
         else {
 
             ObservableList<Patient> observableList = FXCollections.observableList(
-                    MockEntitiyRepository.allPatientsAsList().stream()
+                    MockEntityRepository.allPatientsAsList().stream()
                             .filter(d -> name.isEmpty() || d.getName().toLowerCase().contains(name.toLowerCase()))
                             .filter(d -> oib.isEmpty() || d.getOib().equals(oib))
                             .filter(d -> diagnosis.isEmpty() || d.getDiagnosis().toLowerCase().contains(diagnosis.toLowerCase()))

@@ -1,6 +1,6 @@
 package org.noa.hospitaleo.repository;
 
-public interface EntitiyRepository {
+public interface Loadable {
     public  void loadAll();
 
 }
