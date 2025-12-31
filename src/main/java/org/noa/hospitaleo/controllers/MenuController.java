@@ -1,4 +1,4 @@
-package controllers;
+package org.noa.hospitaleo.controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,6 +22,7 @@ public class MenuController {
         }catch(IOException ex)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za upravljanje doktorima");
+            ex.printStackTrace();
         }
 
     }
@@ -36,7 +37,7 @@ public class MenuController {
             stage.setTitle("Patient Search");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException ex)
+        }catch(IOException _)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za upravljanje pacijentima");
         }
@@ -51,9 +52,23 @@ public class MenuController {
             stage.setTitle("Home");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException ex)
+        }catch(IOException _)
         {
-
+            DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju glavnog ekrana");
+        }
+    }
+    public void showDepartmentOverviewScreen()
+    {
+        Stage stage = HospitalEoApplication.getMainStage();
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("department-overview-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Department Overview");
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException _)
+        {
+            DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za pregled odjeljka");
         }
     }
 

@@ -2,10 +2,13 @@ module org.noa.hospitaleo {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires jakarta.json.bind;
+    requires jakarta.xml.bind;
+    requires java.desktop;
 
 
     opens org.noa.hospitaleo to javafx.fxml;
     exports org.noa.hospitaleo;
-    exports controllers;
-    opens controllers to javafx.fxml;
+    exports org.noa.hospitaleo.controllers;
+    opens org.noa.hospitaleo.controllers to javafx.fxml;
 }

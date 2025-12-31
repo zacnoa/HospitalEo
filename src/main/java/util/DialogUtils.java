@@ -12,4 +12,13 @@ public class DialogUtils {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public static void showSearchScreenErrorDialog(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Pogreška pri pretrazivanju");
+        alert.setHeaderText("Nije moguce pronaci rezultat prema trazenim parametrima");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }
