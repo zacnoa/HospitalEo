@@ -5,6 +5,7 @@ module org.noa.hospitaleo {
     requires jakarta.json.bind;
     requires jakarta.xml.bind;
     requires java.desktop;
+    requires org.controlsfx.controls;
 
 
     opens org.noa.hospitaleo to javafx.fxml;

@@ -16,7 +16,7 @@
        <top>
            <fx:include source="menu.fxml" />
        </top>
-        <center>
+   <bottom>
           <GridPane hgap="10.0" BorderPane.alignment="CENTER">
             <columnConstraints>
               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -33,25 +33,27 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
          <children>
             <TextField fx:id="patientName" GridPane.rowIndex="1" />
             <TextField fx:id="patientOIB" GridPane.rowIndex="3" />
-            <CheckBox fx:id="underageFlag" mnemonicParsing="false" text="Underage" GridPane.rowIndex="8" />
+            <CheckBox fx:id="underageFlag" mnemonicParsing="false" text="Underage" GridPane.rowIndex="9" />
             <TextArea fx:id="patientDiagnosis" prefHeight="200.0" prefWidth="122.0" GridPane.rowIndex="5" />
             <Label text="Name" GridPane.valignment="BOTTOM" />
             <Label text="OIB" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
             <Label text="Diagnosis" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
-            <Button fx:id="submit" mnemonicParsing="false" text="Submit" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+            <Button fx:id="submit" mnemonicParsing="false" text="Submit" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Name of legal guardian" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
             <Label text="OIB of legal guardian" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
-            <ComboBox fx:id="departmentComboBox" editable="true" prefWidth="150.0" promptText="Department" GridPane.rowIndex="7" />
+            <ComboBox fx:id="departmentComboBox" prefWidth="150.0" promptText="Department" GridPane.rowIndex="7" />
+            <ComboBox fx:id="doctorComboBox" prefWidth="150.0" promptText="Doctor" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.vgrow="ALWAYS" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
           </GridPane>
-       </center>
+   </bottom>
     </BorderPane>

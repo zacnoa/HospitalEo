@@ -81,8 +81,9 @@ public class MenuController {
             stage.setTitle("Patient Creation");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException _)
+        }catch(IOException e)
         {
+            e.printStackTrace();
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za kreiranje pacijenta");
         }
     }
