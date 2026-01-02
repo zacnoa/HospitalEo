@@ -27,7 +27,7 @@ public class DepartmentOverviewController {
         listView.setItems(departments);
 
 
-        listView.setCellFactory(lv -> new DepartmentListCell());
+        listView.setCellFactory(_ -> new DepartmentListCell());
     }
 
     private static class DepartmentListCell extends ListCell<Department> {

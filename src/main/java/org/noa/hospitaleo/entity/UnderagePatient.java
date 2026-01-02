@@ -10,9 +10,9 @@ public class UnderagePatient extends Patient{
 
 
 
-    public UnderagePatient(String name,String oib,String diagnosis,Visitor legalGuardian,PatientStatus status)
+    public UnderagePatient(String name,String oib,String diagnosis,String doctorId,String roomId,Visitor legalGuardian,PatientStatus status)
     {
-        super(name, oib, diagnosis, status);
+        super(name, oib, diagnosis,doctorId,roomId, status);
         this.legalGuardian=legalGuardian;
     }
 

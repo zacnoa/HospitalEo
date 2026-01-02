@@ -12,7 +12,7 @@ import org.noa.hospitaleo.repository.RuntimeEntityRepository;
 public final class Doctor extends Employee implements  Serializable {
 
     private String specialty;
-    private List<String> patientIds = new ArrayList<>();
+    private List<String> patientIds;
 
 
 
@@ -65,13 +65,14 @@ public final class Doctor extends Employee implements  Serializable {
         private String oib;
         private String specialty;
         private Double salary;
-        private List<String> patients = new ArrayList<>();
+        private List<String> patients;
 
         public DoctorBuilder(String name, String oib, String specialty, Double salary) {
             this.name = name;
             this.oib = oib;
             this.specialty = specialty;
             this.salary = salary;
+            this.patients = new ArrayList<>();
         }
 
         public DoctorBuilder patients(List<Patient> patients) {

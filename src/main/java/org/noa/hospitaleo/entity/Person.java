@@ -2,6 +2,7 @@ package org.noa.hospitaleo.entity;
 
 
 import jakarta.json.bind.annotation.JsonbTransient;
+import org.noa.hospitaleo.interfaces.Searchable;
 
 import java.io.Serializable;
 import java.util.*;
@@ -11,7 +12,7 @@ import java.util.*;
  * Omogucuje obradu osobnih informacije osobe
  */
 
-public abstract class Person implements Serializable {
+public abstract class Person implements Serializable, Searchable {
 
     private String name;
     private String oib;
@@ -32,7 +33,7 @@ public abstract class Person implements Serializable {
     /**
      * @return Ime
      */
-
+    @Override
     public String getName() {
         return name;
     }
@@ -55,7 +56,7 @@ public abstract class Person implements Serializable {
         this.oib = oib;
     }
 
-
+    @Override
     public String getId() {
         return id;
     }

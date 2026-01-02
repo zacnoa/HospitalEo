@@ -14,10 +14,12 @@ public class Patient extends Person implements  Serializable {
     private PatientStatus status;
     private String roomId;
 
-    public Patient(String name, String oib, String diagnosis, PatientStatus status) {
+    public Patient(String name, String oib, String diagnosis,String doctorId,String roomId, PatientStatus status) {
         super(name, oib);
         this.diagnosis = diagnosis;
+        this.doctorId = doctorId;
         this.status = status;
+        this.roomId = roomId;
     }
 
 

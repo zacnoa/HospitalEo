@@ -8,88 +8,115 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
     @Override
     public void loadAll() {
 
-        Department d1 = new Department("Neurologija");
-        Department d2 = new Department("Kardiologija");
 
-        departmentMap.put(d1.getId(),d1);
-        departmentMap.put(d2.getId(),d2);
+        Department neurology = new Department("Neurologija");
+        Department cardiology = new Department("Kardiologija");
 
-
-
-        Doctor d1Doc1 = new Doctor.DoctorBuilder("Ivan Barisic", "12232144", "neurolog", 12.5).build();
-        d1.addDoctor(d1Doc1);
+        departmentMap.put(neurology.getId(), neurology);
+        departmentMap.put(cardiology.getId(), cardiology);
 
 
-        Room d1Room1 = new Room();
-        d1.addRoom(d1Room1);
+        Doctor neuroDoc1 = new Doctor.DoctorBuilder(
+                "Ivan Barišić", "12232144", "neurolog", 12.5
+        ).build();
 
-        Patient d1Patient1 = new Patient("Luka Lukacevic", "129495", "java", PatientStatus.HOSPITALIZED);
-        d1Patient1.setDoctor(d1Doc1);
-        d1Patient1.setRoom(d1Room1);
-        d1.addPatient(d1Patient1);
+        neurology.addDoctor(neuroDoc1);
+        doctorMap.put(neuroDoc1.getId(), neuroDoc1);
 
+        Room neuroRoom1 = new Room("Neuro soba 1");
+        neurology.addRoom(neuroRoom1);
+        roomMap.put(neuroRoom1.getId(), neuroRoom1);
 
-        doctorMap.put(d1Doc1.getId(),  d1Doc1);
-        roomMap.put(d1Room1.getId(),  d1Room1);
-        patientMap.put(d1Patient1.getId(),  d1Patient1);
+        Patient neuroPatient1 = new Patient(
+                "Luka Lukačević",
+                "129495",
+                "Java",
+                neuroDoc1.getId(),
+                neuroRoom1.getId(),
+                PatientStatus.HOSPITALIZED
+        );
 
-
-        Doctor d1Doc2 = new Doctor.DoctorBuilder("Marija Novak", "98765432", "neurolog", 10.0).build();
-        d1.addDoctor(d1Doc2);
-
-        Room d1Room2 = new Room();
-        d1.addRoom(d1Room2);
-
-        Patient d1Patient2 = new Patient("Ana Anic", "559912", "migrena", PatientStatus.UNDER_DIAGNOSIS);
-        d1Patient2.setDoctor(d1Doc2);
-        d1Patient2.setRoom(d1Room2);
-        d1.addPatient(d1Patient2);
-
-        doctorMap.put(d1Doc2.getId(),  d1Doc2);
-        roomMap.put(d1Room2.getId(),  d1Room2);
-        patientMap.put(d1Patient2.getId(),  d1Patient2);
+        neurology.addPatient(neuroPatient1);
+        neuroDoc1.addPatient(neuroPatient1);
+        neuroRoom1.addPatient(neuroPatient1);
+        patientMap.put(neuroPatient1.getId(), neuroPatient1);
 
 
-        Doctor d2Doc1 = new Doctor.DoctorBuilder("Marko Horvat", "22334455", "kardiolog", 15.0).build();
-        d2.addDoctor(d2Doc1);
+        Doctor neuroDoc2 = new Doctor.DoctorBuilder(
+                "Marija Novak", "98765432", "neurolog", 10.0
+        ).build();
 
-        Room d2Room1 = new Room();
-        d2.addRoom(d2Room1);
+        neurology.addDoctor(neuroDoc2);
+        doctorMap.put(neuroDoc2.getId(), neuroDoc2);
 
-        Patient d2Patient1 = new Patient("Petar Peric", "778899", "aritmija", PatientStatus.HOSPITALIZED);
-        d2Patient1.setDoctor(d2Doc1);
-        d2Patient1.setRoom(d2Room1);
-        d2.addPatient(d2Patient1);
+        Room neuroRoom2 = new Room("Neuro soba 2");
+        neurology.addRoom(neuroRoom2);
+        roomMap.put(neuroRoom2.getId(), neuroRoom2);
 
+        Patient neuroPatient2 = new Patient(
+                "Ana Anić",
+                "559912",
+                "Migrena",
+                neuroDoc2.getId(),
+                neuroRoom2.getId(),
+                PatientStatus.UNDER_DIAGNOSIS
+        );
 
-        doctorMap.put(d2Doc1.getId(),  d2Doc1);
-        roomMap.put(d2Room1.getId(),  d2Room1);
-        patientMap.put(d2Patient1.getId(),  d2Patient1);
-
-
-        Doctor d2Doc2 = new Doctor.DoctorBuilder("Ivana Krizman", "66778899", "kardiolog", 13.0).build();
-        d2.addDoctor(d2Doc2);
-
-        Room d2Room2 = new Room();
-        d2.addRoom(d2Room2);
-
-        Patient d2Patient2 = new Patient("Marija Marinkovic", "443322", "hipertenzija", PatientStatus.UNDER_DIAGNOSIS);
-        d2Patient2.setDoctor(d2Doc2);
-        d2Patient2.setRoom(d2Room2);
-        d2.addPatient(d2Patient2);
-
-        doctorMap.put(d2Doc2.getId(),  d2Doc2);
-        roomMap.put(d2Room2.getId(),  d2Room2);
-        patientMap.put(d2Patient2.getId(),  d2Patient2);
+        neurology.addPatient(neuroPatient2);
+        neuroDoc2.addPatient(neuroPatient2);
+        neuroRoom2.addPatient(neuroPatient2);
+        patientMap.put(neuroPatient2.getId(), neuroPatient2);
 
 
+        Doctor cardioDoc1 = new Doctor.DoctorBuilder(
+                "Marko Horvat", "22334455", "kardiolog", 15.0
+        ).build();
+
+        cardiology.addDoctor(cardioDoc1);
+        doctorMap.put(cardioDoc1.getId(), cardioDoc1);
+
+        Room cardioRoom1 = new Room("Kardio soba 1");
+        cardiology.addRoom(cardioRoom1);
+        roomMap.put(cardioRoom1.getId(), cardioRoom1);
+
+        Patient cardioPatient1 = new Patient(
+                "Petar Perić",
+                "778899",
+                "Aritmija",
+                cardioDoc1.getId(),
+                cardioRoom1.getId(),
+                PatientStatus.HOSPITALIZED
+        );
+
+        cardiology.addPatient(cardioPatient1);
+        cardioDoc1.addPatient(cardioPatient1);
+        cardioRoom1.addPatient(cardioPatient1);
+        patientMap.put(cardioPatient1.getId(), cardioPatient1);
+
+
+        Doctor cardioDoc2 = new Doctor.DoctorBuilder(
+                "Ivana Križman", "66778899", "kardiolog", 13.0
+        ).build();
+
+        cardiology.addDoctor(cardioDoc2);
+        doctorMap.put(cardioDoc2.getId(), cardioDoc2);
+
+        Room cardioRoom2 = new Room("Kardio soba 2");
+        cardiology.addRoom(cardioRoom2);
+        roomMap.put(cardioRoom2.getId(), cardioRoom2);
+
+        Patient cardioPatient2 = new Patient(
+                "Marija Marinković",
+                "443322",
+                "Hipertenzija",
+                cardioDoc2.getId(),
+                cardioRoom2.getId(),
+                PatientStatus.UNDER_DIAGNOSIS
+        );
+
+        cardiology.addPatient(cardioPatient2);
+        cardioDoc2.addPatient(cardioPatient2);
+        cardioRoom2.addPatient(cardioPatient2);
+        patientMap.put(cardioPatient2.getId(), cardioPatient2);
     }
-
-
-
-
-
-
-
 }
-

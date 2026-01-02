@@ -2,6 +2,7 @@ package org.noa.hospitaleo.entity;
 
 
 import jakarta.json.bind.annotation.JsonbTransient;
+import org.noa.hospitaleo.interfaces.Searchable;
 import org.noa.hospitaleo.repository.RuntimeEntityRepository;
 
 import java.io.Serializable;
@@ -9,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class Department implements  Serializable {
+public class Department implements  Serializable, Searchable {
 
     private String name;
 
@@ -57,11 +58,11 @@ public class Department implements  Serializable {
         this.patientIds = list.stream().map(Patient::getId).toList();
     }
 
-
+    @Override
     public String getId() {
         return id;
     }
-
+    @Override
     public String getName() {
         return name;
     }
