@@ -1,14 +1,15 @@
 package org.noa.hospitaleo.controllers;
 
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.noa.hospitaleo.entity.Patient;
-import org.noa.hospitaleo.entity.SearchbyNameEntity;
-import org.noa.hospitaleo.entity.UnderagePatient;
-import org.noa.hospitaleo.entity.Visitor;
+import org.noa.hospitaleo.components.IdentifiableComboBox;
+import org.noa.hospitaleo.entity.*;
 import org.noa.hospitaleo.enums.PatientStatus;
+import org.noa.hospitaleo.interfaces.Identifiable;
 import org.noa.hospitaleo.repository.MockEntityRepository;
 import util.DialogUtils;
 import util.RepositoryUtils;
@@ -35,68 +36,50 @@ public class PatientCreationController {
     private Label nameLabel;
     @FXML
     private Label oibLabel;
-    @FXML
-    private String selectedDepartmentId;
-    @FXML
-    private String selectedDoctorId;
-    @FXML
-    private String selectedRoomId;
+
+    private ObjectProperty<String> selectedDepartmentId= new SimpleObjectProperty<>();
+
+    private ObjectProperty<String> selectedDoctorId= new SimpleObjectProperty<>();
+
+    private ObjectProperty<String> selectedRoomId = new SimpleObjectProperty<>();
 
     @FXML
-    private ComboBox<SearchbyNameEntity> departmentComboBox;
+    private IdentifiableComboBox departmentComboBox;
     @FXML
-    private ComboBox<SearchbyNameEntity> doctorComboBox;
+    private IdentifiableComboBox doctorComboBox;
     @FXML
-    private ComboBox<SearchbyNameEntity> roomComboBox;
+    private IdentifiableComboBox roomComboBox;
 
 
 
     private void updateDoctorSelection() {
-        ObservableList<SearchbyNameEntity> options = RepositoryUtils.listToObservableList(
-                MockEntityRepository.getDepartment(selectedDepartmentId).getDoctors());
-        doctorComboBox.setItems(options);
-        doctorComboBox.setConverter(RepositoryUtils.stringConverterFactory(options));
+        ObservableList<IdentifiableEntity> options = RepositoryUtils.listToObservableList(
+                MockEntityRepository.getDepartment(selectedDepartmentId.get()).getDoctors());
+        doctorComboBox.updateItems(options);
 
     }
     private void updateRoomSelection()
     {
-        ObservableList<SearchbyNameEntity> options = RepositoryUtils.listToObservableList(
-                MockEntityRepository.getDepartment(selectedDepartmentId).getRooms());
-        roomComboBox.setItems(options);
-        roomComboBox.setConverter(RepositoryUtils.stringConverterFactory(options));
+        ObservableList<IdentifiableEntity> options = RepositoryUtils.listToObservableList(
+                MockEntityRepository.getDepartment(selectedDepartmentId.get()).getRooms());
+        roomComboBox.updateItems(options);
     }
     @FXML
     private void initialize() {
 
-        ObservableList<SearchbyNameEntity> options = RepositoryUtils.mapToObservableList(MockEntityRepository.getDepartmentMap());
+        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToObservableList(MockEntityRepository.getDepartmentMap());
+        departmentComboBox.setUp(options,selectedDepartmentId,"Department");
+        doctorComboBox.setUp(selectedDoctorId,"Doctor");
+        roomComboBox.setUp(selectedRoomId,"Room");
 
-        departmentComboBox.setItems(options);
-
-        departmentComboBox.setConverter(RepositoryUtils.stringConverterFactory(options));
-
-        departmentComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                selectedDepartmentId = newVal.getId();
-                updateDoctorSelection();
-                updateRoomSelection();
-            }
+        selectedDepartmentId.addListener((obs, oldVal, newVal) ->
+        {
+            updateRoomSelection();
+            updateDoctorSelection();
         });
 
-        doctorComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                selectedDoctorId = newVal.getId();
-            }
-        });
-        doctorComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                selectedDoctorId = newVal.getId();
-            }
-        });
-        roomComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal != null) {
-                selectedRoomId = newVal.getId();
-            }
-        });
+
+
         underageFlag.selectedProperty().addListener((obs, oldVal, newVal) -> {
             nameLabel.setVisible(!nameLabel.isVisible());
             oibLabel.setVisible(!oibLabel.isVisible());
@@ -119,7 +102,7 @@ public class PatientCreationController {
             DialogUtils.showEntityCreationsErrorDialog("Molim vas ispunite sva polja vezane za ime,OIB i dijagnozu");
             return false;
         } else if (departmentComboBox.getSelectionModel().isEmpty()
-                || departmentComboBox.getSelectionModel().isEmpty()
+                || doctorComboBox.getSelectionModel().isEmpty()
                 || roomComboBox.getSelectionModel().isEmpty())
         {
             DialogUtils.showEntityCreationsErrorDialog("Molim vas odaberite odjel i doktora");
@@ -138,8 +121,8 @@ public class PatientCreationController {
                      patientName.getText(),
                      patientOIB.getText(),
                      patientDiagnosis.getText(),
-                     selectedDoctorId,
-                     selectedRoomId,
+                     selectedDoctorId.get(),
+                     selectedRoomId.get(),
                      new Visitor(legalGuardianName.getText(),legalGuardianOIB.getText()),
                      PatientStatus.HOSPITALIZED);
 
@@ -148,13 +131,13 @@ public class PatientCreationController {
              temp = new Patient(
                     patientName.getText(),
                     patientOIB.getText(),
-                    patientDiagnosis.getText(), selectedDoctorId,
-                    selectedRoomId,
+                    patientDiagnosis.getText(), selectedDoctorId.get(),
+                    selectedRoomId.get(),
                     PatientStatus.HOSPITALIZED);
         }
-        MockEntityRepository.getDoctor(selectedDoctorId).addPatient(temp);
-        MockEntityRepository.getDepartment(selectedDepartmentId).addPatient(temp);
-        MockEntityRepository.getRoom(selectedRoomId).addPatient(temp);
+        MockEntityRepository.getDoctor(selectedDoctorId.get()).addPatient(temp);
+        MockEntityRepository.getDepartment(selectedDepartmentId.get()).addPatient(temp);
+        MockEntityRepository.getRoom(selectedRoomId.get()).addPatient(temp);
         MockEntityRepository.getPatientMap().put(temp.getId(), temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan pacijent:"+" "+patientName.getText());
         reset();

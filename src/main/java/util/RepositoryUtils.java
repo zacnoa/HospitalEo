@@ -3,8 +3,8 @@ package util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.StringConverter;
-import org.noa.hospitaleo.entity.SearchbyNameEntity;
-import org.noa.hospitaleo.interfaces.Searchable;
+import org.noa.hospitaleo.entity.IdentifiableEntity;
+import org.noa.hospitaleo.interfaces.Identifiable;
 
 
 import java.util.List;
@@ -12,32 +12,32 @@ import java.util.Map;
 
 public class RepositoryUtils {
 
-    public static <T extends Searchable> ObservableList<SearchbyNameEntity> mapToObservableList(Map<?, T> map) {
+    public static <T extends Identifiable> ObservableList<IdentifiableEntity> mapToObservableList(Map<?, T> map) {
         return FXCollections.observableArrayList(
                 map.keySet().stream()
                         .map(map::get)
-                        .map(d -> new SearchbyNameEntity(d.getName(), d.getId()))
+                        .map(d -> new IdentifiableEntity(d.getName(), d.getId()))
                         .toList()
         );
     }
 
-    public static <T extends Searchable> ObservableList<SearchbyNameEntity> listToObservableList(List<T> list) {
+    public static <T extends Identifiable> ObservableList<IdentifiableEntity> listToObservableList(List<T> list) {
         return FXCollections.observableArrayList(list.stream()
-                .map(d -> new SearchbyNameEntity(d.getName(), d.getId())).toList());
+                .map(d -> new IdentifiableEntity(d.getName(), d.getId())).toList());
     }
 
-    public static  StringConverter<SearchbyNameEntity> stringConverterFactory(ObservableList<SearchbyNameEntity> options)
+    public static   StringConverter<IdentifiableEntity> stringConverterFactory(ObservableList<IdentifiableEntity> options)
     {
-        return new StringConverter<SearchbyNameEntity>()
+        return new StringConverter<>()
         {
 
             @Override
-            public String toString(SearchbyNameEntity entity) {
+            public String toString(IdentifiableEntity entity) {
                 return entity == null ? "" : entity.getName();
             }
 
             @Override
-            public SearchbyNameEntity fromString(String string) {
+            public IdentifiableEntity fromString(String string) {
                 return options.stream()
                         .filter(item -> item.getName().equalsIgnoreCase(string))
                         .findFirst()

@@ -1,6 +1,6 @@
 package org.noa.hospitaleo.entity;
 
-import org.noa.hospitaleo.interfaces.Searchable;
+import org.noa.hospitaleo.interfaces.Identifiable;
 import org.noa.hospitaleo.repository.RuntimeEntityRepository;
 
 import java.io.Serializable;
@@ -12,7 +12,7 @@ import java.util.UUID;
  * Predstavlja sobu
  */
 
-public class Room implements  Serializable, Searchable {
+public class Room implements  Serializable, Identifiable {
 
     private String name;
     private List<String> patients;

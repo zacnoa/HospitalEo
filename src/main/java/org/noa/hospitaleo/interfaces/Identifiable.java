@@ -1,6 +1,6 @@
 package org.noa.hospitaleo.interfaces;
 
-public interface Searchable {
+public interface Identifiable {
 
     String getName();
     String getId();

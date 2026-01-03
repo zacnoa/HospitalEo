@@ -2,7 +2,7 @@ package org.noa.hospitaleo.entity;
 
 
 import jakarta.json.bind.annotation.JsonbTransient;
-import org.noa.hospitaleo.interfaces.Searchable;
+import org.noa.hospitaleo.interfaces.Identifiable;
 
 import java.io.Serializable;
 import java.util.*;
@@ -12,7 +12,7 @@ import java.util.*;
  * Omogucuje obradu osobnih informacije osobe
  */
 
-public abstract class Person implements Serializable, Searchable {
+public abstract class Person implements Serializable, Identifiable {
 
     private String name;
     private String oib;

@@ -11,6 +11,11 @@ module org.noa.hospitaleo {
 
     opens org.noa.hospitaleo to javafx.fxml;
     exports org.noa.hospitaleo;
+
     exports org.noa.hospitaleo.controllers;
     opens org.noa.hospitaleo.controllers to javafx.fxml;
+
+    exports org.noa.hospitaleo.components;
+    opens org.noa.hospitaleo.components to javafx.fxml;
+
 }
