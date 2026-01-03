@@ -8,8 +8,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import org.noa.hospitaleo.components.IdentifiableComboBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noa.hospitaleo.controllers.DoctorCreationScreenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noa.hospitaleo.controllers.DoctorCreationScreenController">
    <top>
        <fx:include maxWidth="1.7976931348623157E308" source="menu.fxml" />
    </top>
@@ -25,15 +26,20 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <TextField fx:id="doctorName" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
             <TextField fx:id="doctorOib" GridPane.rowIndex="2" />
             <TextField fx:id="doctorSpecialty" GridPane.rowIndex="3" />
-            <Button mnemonicParsing="false" onAction="#handleSubmit" text="Submit" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Button mnemonicParsing="false" onAction="#handleSubmit" text="Submit" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <Label text="Name" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <Label text="OIB" GridPane.rowIndex="2" GridPane.valignment="TOP" />
             <Label text="Specialty" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <IdentifiableComboBox fx:id="departmentComboBox" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <TextField fx:id="doctorSalary" maxWidth="100.0" GridPane.rowIndex="4" />
+            <Label text="Salary" GridPane.rowIndex="4" GridPane.valignment="TOP" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

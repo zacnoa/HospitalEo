@@ -6,73 +6,52 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.noa.hospitaleo.components.IdentifiableComboBox;
-import org.noa.hospitaleo.entity.Doctor;
 import org.noa.hospitaleo.entity.IdentifiableEntity;
+import org.noa.hospitaleo.entity.Room;
 import org.noa.hospitaleo.repository.MockEntityRepository;
 import util.DialogUtils;
 import util.RepositoryUtils;
 import util.StringCheckerUtils;
 
-public class DoctorCreationScreenController {
+public class RoomCreationScreenController {
 
     @FXML
-    private TextField doctorName;
-    @FXML
-    private TextField doctorOib;
-    @FXML
-    private TextField doctorSpecialty;
-    @FXML
-    private TextField doctorSalary;
+    private TextField roomName;
+
     @FXML
     private ObjectProperty<String> selectedDepartmentId=new SimpleObjectProperty<>();
     @FXML
     private IdentifiableComboBox departmentComboBox;
-
-
-
 
     @FXML
     private void initialize() {
         ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(MockEntityRepository.getDepartmentMap());
         departmentComboBox.setUp(options,selectedDepartmentId,"Department");
     }
+
     private void reset()
     {
-        doctorName.clear();
-        doctorOib.clear();
-        doctorSpecialty.clear();
+        roomName.clear();
     }
-
     @FXML
     private boolean handleSubmit()
     {
-        if(StringCheckerUtils.isNullOrEmpty(doctorName.getText(),doctorName.getText(),doctorSpecialty.getText(),doctorSalary.getText()))
+        if(StringCheckerUtils.isNullOrEmpty(roomName.getText()))
         {
             DialogUtils.showEntityCreationsErrorDialog("Molim vas ispunite sva polja");
             return false;
         }
-        else if(departmentComboBox.getSelectionModel().isEmpty())
+        else if(selectedDepartmentId.get().isEmpty())
         {
             DialogUtils.showEntityCreationsErrorDialog("Molim odaberite odjel");
             return false;
         }
 
-        doctorSalary.setText(doctorSalary.getText().replace(",","."));
-        double salary;
-        try {
-             salary = Double.parseDouble(doctorSalary.getText());
-        }catch(NumberFormatException _)
-        {
-            DialogUtils.showEntityCreationsErrorDialog("Molim vas unesite valjani broj");
-            return false;
-        }
-        Doctor temp= new Doctor.DoctorBuilder(doctorName.getText(),doctorOib.getText(),doctorSpecialty.getText(),salary).build();
-        MockEntityRepository.getDepartment(selectedDepartmentId.get()).addDoctor(temp);
-        DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan doktor:"+" "+doctorName.getText());
+        Room temp=new Room(roomName.getText());
+        MockEntityRepository.getDepartment(selectedDepartmentId.get()).addRoom(temp);
+        DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisana soba:"+" "+roomName.getText());
         reset();
         return true;
     }
-
-
 
 }

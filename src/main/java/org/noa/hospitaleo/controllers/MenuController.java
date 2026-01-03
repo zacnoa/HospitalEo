@@ -91,7 +91,53 @@ public class MenuController {
             );
         }
     }
+    public void showDoctorCreationScreen() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    HospitalEoApplication.class.getResource("doctor-creation-screen.fxml")
+            );
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Doctor Creation");
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+            DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za kreiranje doktora");
+        }
 
+    }
+    public void showRoomCreationScreen()
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("room-creation-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Room Creation");
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+            DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za kreiranje soba");
+        }
+    }
+    public void showDepartmentCreationScreen()
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("department-creation-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+            stage.setTitle("Department Creation");
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+            DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za kreiranje odjela");
+        }
+    }
 
 }
 

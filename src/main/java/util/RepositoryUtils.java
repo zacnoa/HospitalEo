@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class RepositoryUtils {
 
-    public static <T extends Identifiable> ObservableList<IdentifiableEntity> mapToObservableList(Map<?, T> map) {
+    public static <T extends Identifiable> ObservableList<IdentifiableEntity> mapToIdentifiableObservableList(Map<?, T> map) {
         return FXCollections.observableArrayList(
                 map.keySet().stream()
                         .map(map::get)
@@ -21,7 +21,7 @@ public class RepositoryUtils {
         );
     }
 
-    public static <T extends Identifiable> ObservableList<IdentifiableEntity> listToObservableList(List<T> list) {
+    public static <T extends Identifiable> ObservableList<IdentifiableEntity> listToIdentifiableObservableList(List<T> list) {
         return FXCollections.observableArrayList(list.stream()
                 .map(d -> new IdentifiableEntity(d.getName(), d.getId())).toList());
     }

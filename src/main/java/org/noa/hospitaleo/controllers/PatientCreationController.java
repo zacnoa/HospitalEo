@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import org.noa.hospitaleo.components.IdentifiableComboBox;
 import org.noa.hospitaleo.entity.*;
 import org.noa.hospitaleo.enums.PatientStatus;
-import org.noa.hospitaleo.interfaces.Identifiable;
 import org.noa.hospitaleo.repository.MockEntityRepository;
 import util.DialogUtils;
 import util.RepositoryUtils;
@@ -53,21 +52,21 @@ public class PatientCreationController {
 
 
     private void updateDoctorSelection() {
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.listToObservableList(
+        ObservableList<IdentifiableEntity> options = RepositoryUtils.listToIdentifiableObservableList(
                 MockEntityRepository.getDepartment(selectedDepartmentId.get()).getDoctors());
         doctorComboBox.updateItems(options);
 
     }
     private void updateRoomSelection()
     {
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.listToObservableList(
+        ObservableList<IdentifiableEntity> options = RepositoryUtils.listToIdentifiableObservableList(
                 MockEntityRepository.getDepartment(selectedDepartmentId.get()).getRooms());
         roomComboBox.updateItems(options);
     }
     @FXML
     private void initialize() {
 
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToObservableList(MockEntityRepository.getDepartmentMap());
+        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(MockEntityRepository.getDepartmentMap());
         departmentComboBox.setUp(options,selectedDepartmentId,"Department");
         doctorComboBox.setUp(selectedDoctorId,"Doctor");
         roomComboBox.setUp(selectedRoomId,"Room");

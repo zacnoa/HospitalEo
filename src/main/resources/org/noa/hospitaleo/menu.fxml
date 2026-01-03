@@ -17,6 +17,7 @@
                <Menu mnemonicParsing="false" text="Departments">
                    <items>
                        <MenuItem mnemonicParsing="false" onAction="#showDepartmentOverviewScreen" text="Department overview" />
+                  <MenuItem mnemonicParsing="false" onAction="#showDepartmentCreationScreen" text="Create department" />
                    </items>
                </Menu>
                <Menu mnemonicParsing="false" text="Patients">
@@ -28,8 +29,14 @@
                <Menu mnemonicParsing="false" text="Doctors">
                    <items>
                        <MenuItem mnemonicParsing="false" onAction="#showDoctorSearchScreen" text="Find doctor" />
+                  <MenuItem mnemonicParsing="false" onAction="#showDoctorCreationScreen" text="Create doctor" />
                    </items>
                </Menu>
+            <Menu mnemonicParsing="false" text="Rooms">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#showRoomCreationScreen" text="Create room" />
+              </items>
+            </Menu>
            </menus>
        </MenuBar>
    </children>
