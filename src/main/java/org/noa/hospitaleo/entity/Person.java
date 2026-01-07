@@ -67,10 +67,6 @@ public abstract class Person implements Serializable, Identifiable {
     }
 
 
-    @JsonbTransient
-    public String getSelectionLine() {
-        return this.name;
-    }
 
 
 }

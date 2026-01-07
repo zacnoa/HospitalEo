@@ -33,13 +33,13 @@ public class RepositoryUtils {
 
             @Override
             public String toString(IdentifiableEntity entity) {
-                return entity == null ? "" : entity.getName();
+                return entity == null ? "" : entity.name();
             }
 
             @Override
             public IdentifiableEntity fromString(String string) {
                 return options.stream()
-                        .filter(item -> item.getName().equalsIgnoreCase(string))
+                        .filter(item -> item.name().equalsIgnoreCase(string))
                         .findFirst()
                         .orElse(null);
             }

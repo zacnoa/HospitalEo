@@ -7,6 +7,7 @@ module org.noa.hospitaleo {
     requires java.desktop;
     requires org.controlsfx.controls;
     requires javafx.base;
+    requires org.noa.hospitaleo;
 
 
     opens org.noa.hospitaleo to javafx.fxml;

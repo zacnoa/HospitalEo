@@ -2,6 +2,7 @@ package org.noa.hospitaleo.entity;
 
 
 import jakarta.json.bind.annotation.JsonbTransient;
+import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.interfaces.Identifiable;
 import org.noa.hospitaleo.repository.RuntimeEntityRepository;
 
@@ -30,7 +31,7 @@ public class Department implements  Serializable, Identifiable {
 
     @JsonbTransient
     public List<Doctor> getDoctors() {
-        return RuntimeEntityRepository.getDoctors(doctorIds);
+        return HospitalEoApplication.getRepository().getDoctors(doctorIds);
     }
 
     @JsonbTransient
@@ -40,7 +41,7 @@ public class Department implements  Serializable, Identifiable {
 
     @JsonbTransient
     public List<Room> getRooms() {
-        return RuntimeEntityRepository.getRooms(roomIds);
+        return HospitalEoApplication.getRepository().getRooms(roomIds);
     }
 
     @JsonbTransient
@@ -50,7 +51,7 @@ public class Department implements  Serializable, Identifiable {
 
     @JsonbTransient
     public List<Patient> getPatients() {
-        return RuntimeEntityRepository.getPatients(patientIds);
+        return HospitalEoApplication.getRepository().getPatients(patientIds);
     }
 
     @JsonbTransient
@@ -104,7 +105,7 @@ public class Department implements  Serializable, Identifiable {
 
 
     public List<Visitor> getVisitors() {
-        return RuntimeEntityRepository.getVisitors(visitorIds);
+        return HospitalEoApplication.getRepository().getVisitors(visitorIds);
     }
 
 

@@ -5,10 +5,11 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.components.IdentifiableComboBox;
 import org.noa.hospitaleo.entity.Doctor;
 import org.noa.hospitaleo.entity.IdentifiableEntity;
-import org.noa.hospitaleo.repository.MockEntityRepository;
+
 import util.DialogUtils;
 import util.RepositoryUtils;
 import util.StringCheckerUtils;
@@ -24,7 +25,7 @@ public class DoctorCreationScreenController {
     @FXML
     private TextField doctorSalary;
     @FXML
-    private ObjectProperty<String> selectedDepartmentId=new SimpleObjectProperty<>();
+    private final ObjectProperty<String> selectedDepartmentId=new SimpleObjectProperty<>();
     @FXML
     private IdentifiableComboBox departmentComboBox;
 
@@ -33,7 +34,7 @@ public class DoctorCreationScreenController {
 
     @FXML
     private void initialize() {
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(MockEntityRepository.getDepartmentMap());
+        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(HospitalEoApplication.getRepository().getDepartmentMap());
         departmentComboBox.setUp(options,selectedDepartmentId,"Department");
     }
     private void reset()
@@ -67,7 +68,7 @@ public class DoctorCreationScreenController {
             return false;
         }
         Doctor temp= new Doctor.DoctorBuilder(doctorName.getText(),doctorOib.getText(),doctorSpecialty.getText(),salary).build();
-        MockEntityRepository.getDepartment(selectedDepartmentId.get()).addDoctor(temp);
+        HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).addDoctor(temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan doktor:"+" "+doctorName.getText());
         reset();
         return true;

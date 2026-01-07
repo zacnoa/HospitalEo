@@ -1,8 +1,8 @@
 package org.noa.hospitaleo.entity;
 
 import jakarta.json.bind.annotation.JsonbTransient;
+import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.enums.PatientStatus;
-import org.noa.hospitaleo.repository.RuntimeEntityRepository;
 
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ public class Patient extends Person implements  Serializable {
 
     @JsonbTransient
     public Doctor getDoctor() {
-        return RuntimeEntityRepository.getDoctor(doctorId);
+        return HospitalEoApplication.getRepository().getDoctor(doctorId);
     }
 
     @JsonbTransient
@@ -36,7 +36,7 @@ public class Patient extends Person implements  Serializable {
     }
     @JsonbTransient
     public Room getRoom() {
-        return RuntimeEntityRepository.getRoom(roomId);
+        return HospitalEoApplication.getRepository().getRoom(roomId);
     }
 
     @JsonbTransient

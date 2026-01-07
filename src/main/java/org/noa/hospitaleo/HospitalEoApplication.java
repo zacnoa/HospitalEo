@@ -11,11 +11,11 @@ import java.io.IOException;
 public class HospitalEoApplication extends Application {
 
     private static  Stage mainStage;
-
+    private static MockEntityRepository mockRepository;
     @Override
     @SuppressWarnings("java:S2696") // Nemozemo promijeniti signature metode posto radimo override
     public  void start(Stage stage) throws IOException {
-        MockEntityRepository mockRepository=new MockEntityRepository();
+         mockRepository=new MockEntityRepository();
         mockRepository.loadAll();
         mainStage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("main-screen.fxml"));
@@ -27,6 +27,9 @@ public class HospitalEoApplication extends Application {
 
     public static Stage getMainStage() {
         return mainStage;
+    }
+    public static MockEntityRepository getRepository() {
+        return mockRepository;
     }
 
 

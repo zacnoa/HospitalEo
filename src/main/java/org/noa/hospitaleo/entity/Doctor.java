@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.noa.hospitaleo.repository.RuntimeEntityRepository;
+import org.noa.hospitaleo.HospitalEoApplication;
+
 
 
 public final class Doctor extends Employee implements  Serializable {
@@ -26,7 +27,7 @@ public final class Doctor extends Employee implements  Serializable {
 
     @JsonbTransient
     public List<Patient> getPatients() {
-        return RuntimeEntityRepository.getPatients(patientIds);
+        return HospitalEoApplication.getRepository().getPatients(patientIds);
     }
 
     @JsonbTransient
@@ -61,10 +62,10 @@ public final class Doctor extends Employee implements  Serializable {
 
 
     public static class DoctorBuilder {
-        private String name;
-        private String oib;
-        private String specialty;
-        private Double salary;
+        private final String name;
+        private final String oib;
+        private final String specialty;
+        private final Double salary;
         private List<String> patients;
 
         public DoctorBuilder(String name, String oib, String specialty, Double salary) {

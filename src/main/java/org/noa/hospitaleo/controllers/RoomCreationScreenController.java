@@ -5,10 +5,11 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.components.IdentifiableComboBox;
 import org.noa.hospitaleo.entity.IdentifiableEntity;
 import org.noa.hospitaleo.entity.Room;
-import org.noa.hospitaleo.repository.MockEntityRepository;
+
 import util.DialogUtils;
 import util.RepositoryUtils;
 import util.StringCheckerUtils;
@@ -25,7 +26,7 @@ public class RoomCreationScreenController {
 
     @FXML
     private void initialize() {
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(MockEntityRepository.getDepartmentMap());
+        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(HospitalEoApplication.getRepository().getDepartmentMap());
         departmentComboBox.setUp(options,selectedDepartmentId,"Department");
     }
 
@@ -48,7 +49,7 @@ public class RoomCreationScreenController {
         }
 
         Room temp=new Room(roomName.getText());
-        MockEntityRepository.getDepartment(selectedDepartmentId.get()).addRoom(temp);
+        HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).addRoom(temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisana soba:"+" "+roomName.getText());
         reset();
         return true;

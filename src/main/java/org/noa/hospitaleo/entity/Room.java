@@ -1,7 +1,7 @@
 package org.noa.hospitaleo.entity;
 
+import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.interfaces.Identifiable;
-import org.noa.hospitaleo.repository.RuntimeEntityRepository;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class Room implements  Serializable, Identifiable {
      */
 
     public List<Patient> getPatients() {
-        return RuntimeEntityRepository.getPatients(patients);
+        return HospitalEoApplication.getRepository().getPatients(patients);
     }
 
 

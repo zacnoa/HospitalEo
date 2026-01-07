@@ -9,102 +9,103 @@ import java.util.Map;
 
 public abstract class EntityRepository {
 
-    protected static final Map<String, Doctor> doctorMap = new HashMap<>();
-    protected static final Map<String, Patient> patientMap = new HashMap<>();
-    protected static final Map<String, Room> roomMap = new HashMap<>();
-    protected static final Map<String, Visitor> visitorMap = new HashMap<>();
-    protected static final Map<String, Department> departmentMap = new HashMap<>();
+    protected  final Map<String, Doctor> doctorMap = new HashMap<>();
+    protected  final Map<String, Patient> patientMap = new HashMap<>();
+    protected  final Map<String, Room> roomMap = new HashMap<>();
+    protected  final Map<String, Visitor> visitorMap = new HashMap<>();
+    protected  final Map<String, Department> departmentMap = new HashMap<>();
 
     protected EntityRepository() {}
 
-    public static Map<String, Department> getDepartmentMap() {
+    public  Map<String, Department> getDepartmentMap() {
         return departmentMap;
     }
-    public static Map<String, Doctor> getDoctorMap() {
+    public  Map<String, Doctor> getDoctorMap() {
         return doctorMap;
     }
-    public static Map<String, Patient> getPatientMap() {
+    public  Map<String, Patient> getPatientMap() {
         return patientMap;
     }
-    public static Map<String, Room> getRoomMap() {
+    public  Map<String, Room> getRoomMap() {
         return roomMap;
     }
-    public static Map<String, Visitor> getVisitorMap() {
+    public  Map<String, Visitor> getVisitorMap() {
         return visitorMap;
     }
 
 
-    public static List<Department> allDepartmentsAsList()
+    public  List<Department> allDepartmentsAsList()
     {
         return departmentMap.values().stream().toList();
     }
-    public static Department getDepartment(String id) {
+    public  Department getDepartment(String id) {
         return departmentMap.get(id);
     }
-    public static List<Department> getDepartments(List<String> ids) {
-        return ids.stream().map(EntityRepository::getDepartment).toList();
+
+    public  List<Department> getDepartments(List<String> ids) {
+        return ids.stream().map(this::getDepartment).toList();
     }
 
-    public static Doctor getDoctor(String id) {
+    public  Doctor getDoctor(String id) {
         return doctorMap.get(id);
     }
 
-    public static Patient getPatient(String id) {
+    public  Patient getPatient(String id) {
         return patientMap.get(id);
     }
 
-    public static Room getRoom(String id) {
+    public  Room getRoom(String id) {
         return roomMap.get(id);
     }
 
-    public static Visitor getVisitor(String id) {
+    public  Visitor getVisitor(String id) {
         return visitorMap.get(id);
     }
 
-    public static List<Doctor> allDoctorsAsList() {
+    public  List<Doctor> allDoctorsAsList() {
         return doctorMap.values().stream()
                 .toList();
     }
 
-    public static List<Patient> allPatientsAsList() {
+    public  List<Patient> allPatientsAsList() {
         return patientMap.values().stream()
                 .toList();
     }
 
-    public static List<Room> allRoomsAsList() {
+    public  List<Room> allRoomsAsList() {
         return roomMap.values().stream()
                 .toList();
     }
 
-    public static List<Visitor> allVisitorsAsList() {
+    public  List<Visitor> allVisitorsAsList() {
         return visitorMap.values().stream()
                 .toList();
     }
 
-    public static List<Patient> getPatients(List<String> ids) {
+    public  List<Patient> getPatients(List<String> ids) {
         return ids.stream()
-                .map(id -> getPatient(id))
+                .map(this::getPatient)
                 .toList();
 
     }
 
-    public static List<Doctor> getDoctors(List<String> ids) {
+    public  List<Doctor> getDoctors(List<String> ids) {
         return ids.stream()
-                .map(id -> getDoctor(id))
+                .map(this::getDoctor)
                 .toList();
 
     }
 
-    public static List<Room> getRooms(List<String> ids) {
+    public  List<Room> getRooms(List<String> ids) {
         return ids.stream()
-                .map(id -> getRoom(id))
+                .map(this::getRoom)
                 .toList();
 
     }
 
-    public static List<Visitor> getVisitors(List<String> ids) {
+    public  List<Visitor> getVisitors(List<String> ids) {
         return ids.stream()
-                .map(id -> getVisitor(id))
+                .map(this::getVisitor)
                 .toList();
     }
 

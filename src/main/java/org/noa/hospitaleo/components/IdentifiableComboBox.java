@@ -9,8 +9,7 @@ import util.RepositoryUtils;
 
 public class IdentifiableComboBox extends ComboBox<IdentifiableEntity> {
 
-
-    public IdentifiableComboBox(){}
+    public IdentifiableComboBox(){}// Prazno radi inicijalizacije
 
     public void  setUp(ObservableList<IdentifiableEntity> items, ObjectProperty<String> selectedIdProperty, String prompt)
     {
@@ -22,7 +21,7 @@ public class IdentifiableComboBox extends ComboBox<IdentifiableEntity> {
         {
             if(newValue!=null)
             {
-                selectedIdProperty.set(newValue.getId());
+                selectedIdProperty.set(newValue.id());
             }
             else
             {
@@ -37,7 +36,7 @@ public class IdentifiableComboBox extends ComboBox<IdentifiableEntity> {
         {
             if(newValue!=null)
             {
-                selectedIdProperty.set(newValue.getId());
+                selectedIdProperty.set(newValue.id());
             }
             else
             {

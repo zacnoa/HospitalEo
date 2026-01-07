@@ -6,10 +6,11 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.components.IdentifiableComboBox;
 import org.noa.hospitaleo.entity.*;
 import org.noa.hospitaleo.enums.PatientStatus;
-import org.noa.hospitaleo.repository.MockEntityRepository;
+
 import util.DialogUtils;
 import util.RepositoryUtils;
 import util.StringCheckerUtils;
@@ -36,11 +37,11 @@ public class PatientCreationController {
     @FXML
     private Label oibLabel;
 
-    private ObjectProperty<String> selectedDepartmentId= new SimpleObjectProperty<>();
+    private final ObjectProperty<String> selectedDepartmentId= new SimpleObjectProperty<>();
 
-    private ObjectProperty<String> selectedDoctorId= new SimpleObjectProperty<>();
+    private final ObjectProperty<String> selectedDoctorId= new SimpleObjectProperty<>();
 
-    private ObjectProperty<String> selectedRoomId = new SimpleObjectProperty<>();
+    private final ObjectProperty<String> selectedRoomId = new SimpleObjectProperty<>();
 
     @FXML
     private IdentifiableComboBox departmentComboBox;
@@ -53,20 +54,20 @@ public class PatientCreationController {
 
     private void updateDoctorSelection() {
         ObservableList<IdentifiableEntity> options = RepositoryUtils.listToIdentifiableObservableList(
-                MockEntityRepository.getDepartment(selectedDepartmentId.get()).getDoctors());
+                HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).getDoctors());
         doctorComboBox.updateItems(options);
 
     }
     private void updateRoomSelection()
     {
         ObservableList<IdentifiableEntity> options = RepositoryUtils.listToIdentifiableObservableList(
-                MockEntityRepository.getDepartment(selectedDepartmentId.get()).getRooms());
+                HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).getRooms());
         roomComboBox.updateItems(options);
     }
     @FXML
     private void initialize() {
 
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(MockEntityRepository.getDepartmentMap());
+        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(HospitalEoApplication.getRepository().getDepartmentMap());
         departmentComboBox.setUp(options,selectedDepartmentId,"Department");
         doctorComboBox.setUp(selectedDoctorId,"Doctor");
         roomComboBox.setUp(selectedRoomId,"Room");
@@ -134,10 +135,10 @@ public class PatientCreationController {
                     selectedRoomId.get(),
                     PatientStatus.HOSPITALIZED);
         }
-        MockEntityRepository.getDoctor(selectedDoctorId.get()).addPatient(temp);
-        MockEntityRepository.getDepartment(selectedDepartmentId.get()).addPatient(temp);
-        MockEntityRepository.getRoom(selectedRoomId.get()).addPatient(temp);
-        MockEntityRepository.getPatientMap().put(temp.getId(), temp);
+        HospitalEoApplication.getRepository().getDoctor(selectedDoctorId.get()).addPatient(temp);
+        HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).addPatient(temp);
+        HospitalEoApplication.getRepository().getRoom(selectedRoomId.get()).addPatient(temp);
+        HospitalEoApplication.getRepository().getPatientMap().put(temp.getId(), temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan pacijent:"+" "+patientName.getText());
         reset();
         return true;

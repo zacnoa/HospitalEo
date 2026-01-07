@@ -12,8 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.entity.Department;
-import org.noa.hospitaleo.repository.MockEntityRepository;
 
 public class DepartmentOverviewController {
 
@@ -23,7 +23,7 @@ public class DepartmentOverviewController {
     @FXML
     public void initialize()
     {
-        ObservableList<Department> departments = FXCollections.observableList(MockEntityRepository.allDepartmentsAsList());
+        ObservableList<Department> departments = FXCollections.observableList(HospitalEoApplication.getRepository().allDepartmentsAsList());
         listView.setItems(departments);
 
 
