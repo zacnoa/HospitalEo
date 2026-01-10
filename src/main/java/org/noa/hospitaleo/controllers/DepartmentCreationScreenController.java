@@ -29,6 +29,7 @@ public class DepartmentCreationScreenController {
         Department temp=new Department(departmentName.getText());
         HospitalEoApplication.getRepository().getDepartmentMap().put(temp.getId(),temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan odjel:"+" "+departmentName.getText());
+        HospitalEoApplication.logger.info("Uspjesno je zapisan odjel:{}",departmentName.getText());
         reset();
         return true;
     }

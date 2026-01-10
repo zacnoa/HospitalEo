@@ -51,6 +51,7 @@ public class RoomCreationScreenController {
         Room temp=new Room(roomName.getText());
         HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).addRoom(temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisana soba:"+" "+roomName.getText());
+        HospitalEoApplication.logger.info("Uspjesno je zapisana soba:{}",roomName.getText());
         reset();
         return true;
     }

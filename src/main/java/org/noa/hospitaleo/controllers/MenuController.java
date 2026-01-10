@@ -22,7 +22,7 @@ public class MenuController {
         }catch(IOException ex)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za upravljanje doktorima");
-            ex.printStackTrace();
+            HospitalEoApplication.logger.error(ex.getMessage(),ex);
         }
 
     }
@@ -37,9 +37,10 @@ public class MenuController {
             stage.setTitle("Patient Search");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException _)
+        }catch(IOException ex)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za upravljanje pacijentima");
+            HospitalEoApplication.logger.error(ex.getMessage(),ex);
         }
 
     }
@@ -52,9 +53,10 @@ public class MenuController {
             stage.setTitle("Home");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException _)
+        }catch(IOException ex)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju glavnog ekrana");
+            HospitalEoApplication.logger.error(ex.getMessage(),ex);
         }
     }
     public void showDepartmentOverviewScreen()
@@ -66,9 +68,10 @@ public class MenuController {
             stage.setTitle("Department Overview");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException _)
+        }catch(IOException ex)
         {
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za pregled odjeljka");
+            HospitalEoApplication.logger.error(ex.getMessage(),ex);
         }
     }
     public void showPatientCreationScreen() {
@@ -78,17 +81,14 @@ public class MenuController {
             );
 
             Scene scene = new Scene(fxmlLoader.load());
-
             Stage stage = new Stage();
             stage.setTitle("Patient Creation");
             stage.setScene(scene);
             stage.show();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            DialogUtils.showDisplayScreenErrorDialog(
-                    "Došlo je do greške pri prikazivanju ekrana za kreiranje pacijenta"
-            );
+        } catch (IOException ex) {
+            DialogUtils.showDisplayScreenErrorDialog("Došlo je do greške pri prikazivanju ekrana za kreiranje pacijenta");
+            HospitalEoApplication.logger.error(ex.getMessage(),ex);
         }
     }
     public void showDoctorCreationScreen() {
@@ -101,10 +101,10 @@ public class MenuController {
             stage.setTitle("Doctor Creation");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException e)
+        }catch(IOException ex)
         {
-            e.printStackTrace();
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za kreiranje doktora");
+            HospitalEoApplication.logger.error(ex.getMessage(), ex);
         }
 
     }
@@ -117,10 +117,10 @@ public class MenuController {
             stage.setTitle("Room Creation");
             stage.setScene(scene);
             stage.show();
-        }catch(IOException e)
+        }catch(IOException ex)
         {
-            e.printStackTrace();
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za kreiranje soba");
+            HospitalEoApplication.logger.error(ex.getMessage(),ex);
         }
     }
     public void showDepartmentCreationScreen()
@@ -134,8 +134,8 @@ public class MenuController {
             stage.show();
         }catch(IOException e)
         {
-            e.printStackTrace();
             DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za kreiranje odjela");
+            HospitalEoApplication.logger.error(e.getMessage(),e);
         }
     }
 

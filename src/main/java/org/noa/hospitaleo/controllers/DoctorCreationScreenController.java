@@ -70,6 +70,7 @@ public class DoctorCreationScreenController {
         Doctor temp= new Doctor.DoctorBuilder(doctorName.getText(),doctorOib.getText(),doctorSpecialty.getText(),salary).build();
         HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).addDoctor(temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan doktor:"+" "+doctorName.getText());
+        HospitalEoApplication.logger.info("Uspjesno je zapisan doktor:{}",doctorName.getText());
         reset();
         return true;
     }
