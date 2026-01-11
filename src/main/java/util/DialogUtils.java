@@ -39,4 +39,13 @@ public class DialogUtils {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    public static void showIOError(String message)
+    {
+
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Greska pri radu s datotekom");
+        alert.setHeaderText("Greska pri citanju datoteke");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 }

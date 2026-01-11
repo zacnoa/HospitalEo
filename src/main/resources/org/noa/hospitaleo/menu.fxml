@@ -37,6 +37,11 @@
                 <MenuItem mnemonicParsing="false" onAction="#showRoomCreationScreen" text="Create room" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Admin">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showLogOverviewScreen" text="Log" />
+              </items>
+            </Menu>
            </menus>
        </MenuBar>
    </children>

@@ -138,6 +138,22 @@ public class MenuController {
             HospitalEoApplication.logger.error(e.getMessage(),e);
         }
     }
+    public void showLogOverviewScreen()
+    {
+
+        Stage stage = HospitalEoApplication.getMainStage();
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("log-overview-screen.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setTitle("Log Overview");
+            stage.setScene(scene);
+            stage.show();
+        }catch(IOException ex)
+        {
+            DialogUtils.showDisplayScreenErrorDialog("Doslo je do greske pri prikazivanju ekrana za pregled loga");
+            HospitalEoApplication.logger.error("Doslo je do greske pri prikazivanju ekrana za pregled loga",ex);
+        }
+    }
 
 }
 
