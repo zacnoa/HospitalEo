@@ -1,7 +1,6 @@
 package org.noa.hospitaleo.entity;
 
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import org.noa.hospitaleo.interfaces.Identifiable;
 
 import java.io.Serializable;
