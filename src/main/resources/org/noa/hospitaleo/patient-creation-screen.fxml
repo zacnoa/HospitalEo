@@ -44,10 +44,10 @@
             <Label text="OIB" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
             <Label text="Diagnosis" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
             <Button  mnemonicParsing="false" onAction="#handleSubmit" text="Submit" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-            <TextField fx:id="legalGuardianName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="legalGuardianOIB" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="nameLabel" text="Name of legal guardian" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
-            <Label fx:id="oibLabel" text="OIB of legal guardian" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+            <TextField fx:id="guardianName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="guardianOIB" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="guardianNameLabel" text="Name of legal guardian" GridPane.columnIndex="1" GridPane.valignment="BOTTOM" />
+            <Label fx:id="guardianOibLabel" text="OIB of legal guardian" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
             <IdentifiableComboBox fx:id="departmentComboBox" prefWidth="150.0" promptText="Department" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
             <IdentifiableComboBox fx:id="doctorComboBox" prefWidth="150.0" promptText="Doctor" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
             <IdentifiableComboBox fx:id="roomComboBox" prefWidth="150.0" promptText="Room" GridPane.rowIndex="8" GridPane.valignment="CENTER" />

@@ -29,11 +29,11 @@ public class PatientCreationController {
     @FXML
     private CheckBox underageFlag;
     @FXML
-    private TextField legalGuardianName;
+    private TextField guardianName;
     @FXML
-    private TextField legalGuardianOIB;
+    private TextField guardianOIB;
     @FXML
-    private Label nameLabel;
+    private Label guardianNameLabel;
     @FXML
     private Label guardianOibLabel;
 
@@ -81,16 +81,16 @@ public class PatientCreationController {
 
 
         underageFlag.selectedProperty().addListener((obs, oldVal, newVal) -> {
-            nameLabel.setVisible(!nameLabel.isVisible());
+            guardianNameLabel.setVisible(!guardianNameLabel.isVisible());
             guardianOibLabel.setVisible(!guardianOibLabel.isVisible());
-            legalGuardianName.setVisible(!legalGuardianName.isVisible());
-            legalGuardianOIB.setVisible(!legalGuardianOIB.isVisible());
+            guardianName.setVisible(!guardianName.isVisible());
+            guardianOIB.setVisible(!guardianOIB.isVisible());
         });
 
-        nameLabel.setVisible(!nameLabel.isVisible());
+        guardianNameLabel.setVisible(!guardianNameLabel.isVisible());
         guardianOibLabel.setVisible(!guardianOibLabel.isVisible());
-        legalGuardianName.setVisible(!legalGuardianName.isVisible());
-        legalGuardianOIB.setVisible(!legalGuardianOIB.isVisible());
+        guardianName.setVisible(!guardianName.isVisible());
+        guardianOIB.setVisible(!guardianOIB.isVisible());
 
     }
 
@@ -109,7 +109,7 @@ public class PatientCreationController {
             return false;
         }
 
-        if (underageFlag.isSelected() && StringCheckerUtils.isNullOrEmpty(legalGuardianName.getText(), legalGuardianOIB.getText()))
+        if (underageFlag.isSelected() && StringCheckerUtils.isNullOrEmpty(guardianName.getText(), guardianOIB.getText()))
         {
             DialogUtils.showEntityCreationsErrorDialog("Molim vas ispunite sva polja vezana za skrbinka pacijenta");
             return false;
@@ -123,7 +123,7 @@ public class PatientCreationController {
                      patientDiagnosis.getText(),
                      selectedDoctorId.get(),
                      selectedRoomId.get(),
-                     new Visitor(legalGuardianName.getText(),legalGuardianOIB.getText()),
+                     new Visitor(guardianName.getText(), guardianOIB.getText()),
                      PatientStatus.HOSPITALIZED);
 
          }
@@ -154,8 +154,8 @@ public class PatientCreationController {
         patientOIB.clear();
         patientDiagnosis.clear();
         underageFlag.setSelected(false);
-        legalGuardianName.clear();
-        legalGuardianOIB.clear();
+        guardianName.clear();
+        guardianOIB.clear();
     }
 }
 
