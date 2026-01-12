@@ -9,7 +9,8 @@ import util.RepositoryUtils;
 
 public class IdentifiableComboBox extends ComboBox<IdentifiableEntity> {
 
-    public IdentifiableComboBox(){}// Prazno radi inicijalizacije
+    @SuppressWarnings("java:S1186") // Prazno radi inicijalizacije
+    public IdentifiableComboBox(){}
 
     public void  setUp(ObservableList<IdentifiableEntity> items, ObjectProperty<String> selectedIdProperty, String prompt)
     {

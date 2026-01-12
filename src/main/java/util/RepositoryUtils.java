@@ -12,6 +12,8 @@ import java.util.Map;
 
 public class RepositoryUtils {
 
+    private RepositoryUtils() {}
+
     public static <T extends Identifiable> ObservableList<IdentifiableEntity> mapToIdentifiableObservableList(Map<?, T> map) {
         return FXCollections.observableArrayList(
                 map.keySet().stream()

@@ -4,8 +4,6 @@ package org.noa.hospitaleo.entity;
 import jakarta.json.bind.annotation.JsonbTransient;
 import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.interfaces.Identifiable;
-import org.noa.hospitaleo.repository.RuntimeEntityRepository;
-
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;

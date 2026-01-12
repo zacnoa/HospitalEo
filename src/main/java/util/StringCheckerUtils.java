@@ -2,6 +2,7 @@ package util;
 
 public class StringCheckerUtils {
 
+    private StringCheckerUtils() {}
 
     public static boolean isNullOrEmpty(String ...values) {
         for(String i: values)

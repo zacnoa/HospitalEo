@@ -2,9 +2,9 @@ package util;
 
 import javafx.scene.control.Alert;
 
-import java.util.function.Supplier;
-
 public class DialogUtils {
+
+    private DialogUtils(){}
 
     public static void showDisplayScreenErrorDialog(String message)
     {

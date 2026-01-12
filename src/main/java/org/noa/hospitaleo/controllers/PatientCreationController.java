@@ -35,7 +35,7 @@ public class PatientCreationController {
     @FXML
     private Label nameLabel;
     @FXML
-    private Label oibLabel;
+    private Label guardianOibLabel;
 
     private final ObjectProperty<String> selectedDepartmentId= new SimpleObjectProperty<>();
 
@@ -82,13 +82,13 @@ public class PatientCreationController {
 
         underageFlag.selectedProperty().addListener((obs, oldVal, newVal) -> {
             nameLabel.setVisible(!nameLabel.isVisible());
-            oibLabel.setVisible(!oibLabel.isVisible());
+            guardianOibLabel.setVisible(!guardianOibLabel.isVisible());
             legalGuardianName.setVisible(!legalGuardianName.isVisible());
             legalGuardianOIB.setVisible(!legalGuardianOIB.isVisible());
         });
 
         nameLabel.setVisible(!nameLabel.isVisible());
-        oibLabel.setVisible(!oibLabel.isVisible());
+        guardianOibLabel.setVisible(!guardianOibLabel.isVisible());
         legalGuardianName.setVisible(!legalGuardianName.isVisible());
         legalGuardianOIB.setVisible(!legalGuardianOIB.isVisible());
 
