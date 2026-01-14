@@ -14,6 +14,8 @@ import util.DialogUtils;
 import util.RepositoryUtils;
 import util.StringCheckerUtils;
 
+import java.util.UUID;
+
 public class DoctorCreationScreenController {
 
     @FXML
@@ -25,7 +27,7 @@ public class DoctorCreationScreenController {
     @FXML
     private TextField doctorSalary;
     @FXML
-    private final ObjectProperty<String> selectedDepartmentId=new SimpleObjectProperty<>();
+    private final ObjectProperty<UUID> selectedDepartmentId=new SimpleObjectProperty<>();
     @FXML
     private IdentifiableComboBox departmentComboBox;
 

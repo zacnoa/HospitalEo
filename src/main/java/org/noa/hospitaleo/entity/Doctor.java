@@ -5,6 +5,7 @@ import jakarta.json.bind.annotation.JsonbTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.noa.hospitaleo.HospitalEoApplication;
 
@@ -13,7 +14,7 @@ import org.noa.hospitaleo.HospitalEoApplication;
 public final class Doctor extends Employee implements  Serializable {
 
     private String specialty;
-    private List<String> patientIds;
+    private List<UUID> patientIds;
 
 
 
@@ -46,11 +47,11 @@ public final class Doctor extends Employee implements  Serializable {
         this.specialty = specialty;
     }
 
-    public List<String> getPatientIds() {
+    public List<UUID> getPatientIds() {
         return patientIds;
     }
 
-    public void setPatientIds(List<String> patients) {
+    public void setPatientIds(List<UUID> patients) {
         this.patientIds = patients;
     }
 
@@ -66,7 +67,7 @@ public final class Doctor extends Employee implements  Serializable {
         private final String oib;
         private final String specialty;
         private final Double salary;
-        private List<String> patients;
+        private List<UUID> patients;
 
         public DoctorBuilder(String name, String oib, String specialty, Double salary) {
             this.name = name;

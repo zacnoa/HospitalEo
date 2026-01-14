@@ -34,7 +34,7 @@ public class DialogUtils {
     public static void showEntityCreationSuccessDialog(String message)
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Zavsen upis u evidenciju");
+        alert.setTitle("Zavrsen upis u evidenciju");
         alert.setHeaderText("Uspesno ste kreirali novi entitet");
         alert.setContentText(message);
         alert.showAndWait();
@@ -45,6 +45,14 @@ public class DialogUtils {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Greska pri radu s datotekom");
         alert.setHeaderText("Greska pri citanju datoteke");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    public static void showDatabaseErrorDialog(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Doslo je do greske u bazi podataka");
+        alert.setHeaderText("Doslo je do greske pri komunikaciji s bazom podataka");
         alert.setContentText(message);
         alert.showAndWait();
     }

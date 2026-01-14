@@ -377,3 +377,4 @@ Caused by: java.lang.NullPointerException: Cannot invoke "javafx.scene.control.L
 	at org.noa.hospitaleo/org.noa.hospitaleo.controllers.PatientCreationController.initialize(PatientCreationController.java:91)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	... 61 common frames omitted
+2026-01-14 18:15:11,529 INFO [JavaFX Application Thread] o.n.h.HospitalEoApplication [DoctorCreationScreenController.java:75] Uspjesno je zapisan doktor:sdf

@@ -7,12 +7,14 @@ import org.noa.hospitaleo.entity.IdentifiableEntity;
 
 import util.RepositoryUtils;
 
+import java.util.UUID;
+
 public class IdentifiableComboBox extends ComboBox<IdentifiableEntity> {
 
     @SuppressWarnings("java:S1186") // Prazno radi inicijalizacije
     public IdentifiableComboBox(){}
 
-    public void  setUp(ObservableList<IdentifiableEntity> items, ObjectProperty<String> selectedIdProperty, String prompt)
+    public void  setUp(ObservableList<IdentifiableEntity> items, ObjectProperty<UUID> selectedIdProperty, String prompt)
     {
         promptTextProperty().set(prompt);
         setItems(items);
@@ -30,7 +32,7 @@ public class IdentifiableComboBox extends ComboBox<IdentifiableEntity> {
             }
         });
     }
-    public void setUp(ObjectProperty<String> selectedIdProperty,String prompt)
+    public void setUp(ObjectProperty<UUID> selectedIdProperty,String prompt)
     {
         promptTextProperty().set(prompt);
         getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->

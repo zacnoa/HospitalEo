@@ -15,7 +15,7 @@ public abstract class Person implements Serializable, Identifiable {
 
     private String name;
     private String oib;
-    private String id;
+    private UUID id;
 
 
     /**
@@ -25,7 +25,7 @@ public abstract class Person implements Serializable, Identifiable {
     protected Person(String name, String oib) {
         this.name = name;
         this.oib = oib;
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID();
 
     }
 
@@ -56,12 +56,12 @@ public abstract class Person implements Serializable, Identifiable {
     }
 
     @Override
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

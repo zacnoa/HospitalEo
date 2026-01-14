@@ -5,16 +5,17 @@ import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.enums.PatientStatus;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 
 public class Patient extends Person implements  Serializable {
 
-    private String doctorId;
+    private UUID doctorId;
     private String diagnosis;
     private PatientStatus status;
-    private String roomId;
+    private UUID roomId;
 
-    public Patient(String name, String oib, String diagnosis,String doctorId,String roomId, PatientStatus status) {
+    public Patient(String name, String oib, String diagnosis,UUID doctorId,UUID roomId, PatientStatus status) {
         super(name, oib);
         this.diagnosis = diagnosis;
         this.doctorId = doctorId;
@@ -45,21 +46,21 @@ public class Patient extends Person implements  Serializable {
     }
 
 
-    public String getDoctorId() {
+    public UUID getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(String id) {
+    public void setDoctorId(UUID id) {
         this.doctorId = id;
     }
 
 
-    public String getRoomId() {
+    public UUID getRoomId() {
         return roomId;
     }
 
 
-    public void setRoomId(String id) {
+    public void setRoomId(UUID id) {
         this.roomId = id;
     }
 

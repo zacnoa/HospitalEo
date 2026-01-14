@@ -15,6 +15,8 @@ import util.DialogUtils;
 import util.RepositoryUtils;
 import util.StringCheckerUtils;
 
+import java.util.UUID;
+
 
 public class PatientCreationController {
 
@@ -37,11 +39,11 @@ public class PatientCreationController {
     @FXML
     private Label guardianOibLabel;
 
-    private final ObjectProperty<String> selectedDepartmentId= new SimpleObjectProperty<>();
+    private final ObjectProperty<UUID> selectedDepartmentId= new SimpleObjectProperty<>();
 
-    private final ObjectProperty<String> selectedDoctorId= new SimpleObjectProperty<>();
+    private final ObjectProperty<UUID> selectedDoctorId= new SimpleObjectProperty<>();
 
-    private final ObjectProperty<String> selectedRoomId = new SimpleObjectProperty<>();
+    private final ObjectProperty<UUID> selectedRoomId = new SimpleObjectProperty<>();
 
     @FXML
     private IdentifiableComboBox departmentComboBox;

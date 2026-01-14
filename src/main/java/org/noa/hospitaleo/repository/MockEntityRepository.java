@@ -12,8 +12,8 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         Department neurology = new Department("Neurologija");
         Department cardiology = new Department("Kardiologija");
 
-        departmentMap.put(neurology.getId(), neurology);
-        departmentMap.put(cardiology.getId(), cardiology);
+        super.getDepartmentMap().put(neurology.getId(), neurology);
+        super.getDepartmentMap().put(cardiology.getId(), cardiology);
 
 
         Doctor neuroDoc1 = new Doctor.DoctorBuilder(
@@ -21,11 +21,11 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         ).build();
 
         neurology.addDoctor(neuroDoc1);
-        doctorMap.put(neuroDoc1.getId(), neuroDoc1);
+        super.getDoctorMap().put(neuroDoc1.getId(), neuroDoc1);
 
         Room neuroRoom1 = new Room("Neuro soba 1");
         neurology.addRoom(neuroRoom1);
-        roomMap.put(neuroRoom1.getId(), neuroRoom1);
+        super.getRoomMap().put(neuroRoom1.getId(), neuroRoom1);
 
         Patient neuroPatient1 = new Patient(
                 "Luka Lukačević",
@@ -39,7 +39,7 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         neurology.addPatient(neuroPatient1);
         neuroDoc1.addPatient(neuroPatient1);
         neuroRoom1.addPatient(neuroPatient1);
-        patientMap.put(neuroPatient1.getId(), neuroPatient1);
+        super.getPatientMap().put(neuroPatient1.getId(), neuroPatient1);
 
 
         Doctor neuroDoc2 = new Doctor.DoctorBuilder(
@@ -47,11 +47,11 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         ).build();
 
         neurology.addDoctor(neuroDoc2);
-        doctorMap.put(neuroDoc2.getId(), neuroDoc2);
+        super.getDoctorMap().put(neuroDoc2.getId(), neuroDoc2);
 
         Room neuroRoom2 = new Room("Neuro soba 2");
         neurology.addRoom(neuroRoom2);
-        roomMap.put(neuroRoom2.getId(), neuroRoom2);
+        super.getRoomMap().put(neuroRoom2.getId(), neuroRoom2);
 
         Patient neuroPatient2 = new Patient(
                 "Ana Anić",
@@ -65,7 +65,7 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         neurology.addPatient(neuroPatient2);
         neuroDoc2.addPatient(neuroPatient2);
         neuroRoom2.addPatient(neuroPatient2);
-        patientMap.put(neuroPatient2.getId(), neuroPatient2);
+        super.getPatientMap().put(neuroPatient2.getId(), neuroPatient2);
 
 
         Doctor cardioDoc1 = new Doctor.DoctorBuilder(
@@ -73,11 +73,11 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         ).build();
 
         cardiology.addDoctor(cardioDoc1);
-        doctorMap.put(cardioDoc1.getId(), cardioDoc1);
+        super.getDoctorMap().put(cardioDoc1.getId(), cardioDoc1);
 
         Room cardioRoom1 = new Room("Kardio soba 1");
         cardiology.addRoom(cardioRoom1);
-        roomMap.put(cardioRoom1.getId(), cardioRoom1);
+        super.getRoomMap().put(cardioRoom1.getId(), cardioRoom1);
 
         Patient cardioPatient1 = new Patient(
                 "Petar Perić",
@@ -91,7 +91,7 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         cardiology.addPatient(cardioPatient1);
         cardioDoc1.addPatient(cardioPatient1);
         cardioRoom1.addPatient(cardioPatient1);
-        patientMap.put(cardioPatient1.getId(), cardioPatient1);
+        super.getPatientMap().put(cardioPatient1.getId(), cardioPatient1);
 
 
         Doctor cardioDoc2 = new Doctor.DoctorBuilder(
@@ -99,11 +99,11 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         ).build();
 
         cardiology.addDoctor(cardioDoc2);
-        doctorMap.put(cardioDoc2.getId(), cardioDoc2);
+        super.getDoctorMap().put(cardioDoc2.getId(), cardioDoc2);
 
         Room cardioRoom2 = new Room("Kardio soba 2");
         cardiology.addRoom(cardioRoom2);
-        roomMap.put(cardioRoom2.getId(), cardioRoom2);
+        super.getRoomMap().put(cardioRoom2.getId(), cardioRoom2);
 
         Patient cardioPatient2 = new Patient(
                 "Marija Marinković",
@@ -117,6 +117,6 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         cardiology.addPatient(cardioPatient2);
         cardioDoc2.addPatient(cardioPatient2);
         cardioRoom2.addPatient(cardioPatient2);
-        patientMap.put(cardioPatient2.getId(), cardioPatient2);
+        super.getPatientMap().put(cardioPatient2.getId(), cardioPatient2);
     }
 }

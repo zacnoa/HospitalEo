@@ -14,16 +14,16 @@ public class Department implements  Serializable, Identifiable {
     private String name;
 
 
-    private transient List<String> doctorIds = new ArrayList<>();
-    private transient List<String> roomIds = new ArrayList<>();
-    private transient List<String> patientIds = new ArrayList<>();
-    private transient List<String> visitorIds = new ArrayList<>();
-    private final String id;
+    private transient List<UUID> doctorIds = new ArrayList<>();
+    private transient List<UUID> roomIds = new ArrayList<>();
+    private transient List<UUID> patientIds = new ArrayList<>();
+    private transient List<UUID> visitorIds = new ArrayList<>();
+    private final UUID id;
 
 
     public Department(String name) {
         this.name = name;
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID();
     }
 
 
@@ -57,8 +57,18 @@ public class Department implements  Serializable, Identifiable {
         this.patientIds = list.stream().map(Patient::getId).toList();
     }
 
+    public List<Visitor> getVisitors() {
+        return HospitalEoApplication.getRepository().getVisitors(visitorIds);
+    }
+
+
+    public void setVisitors(List<Visitor> list) {
+        this.visitorIds = list.stream().map(Visitor::getId).toList();
+    }
+
+
     @Override
-    public String getId() {
+    public UUID getId() {
         return id;
     }
     @Override
@@ -72,52 +82,44 @@ public class Department implements  Serializable, Identifiable {
     }
 
 
-    public List<String> getDoctorIds() {
+    public List<UUID> getDoctorIds() {
         return doctorIds;
     }
 
 
-    public void setDoctorIds(List<String> ids) {
+    public void setDoctorIds(List<UUID> ids) {
         this.doctorIds = ids;
     }
 
 
-    public List<String> getRoomIds() {
+    public List<UUID> getRoomIds() {
         return roomIds;
     }
 
 
-    public void setRoomIds(List<String> ids) {
+    public void setRoomIds(List<UUID> ids) {
         this.roomIds = ids;
     }
 
 
-    public List<String> getPatientIds() {
+    public List<UUID> getPatientIds() {
         return patientIds;
     }
 
 
-    public void setPatientIds(List<String> ids) {
+    public void setPatientIds(List<UUID> ids) {
         this.patientIds = ids;
     }
 
 
-    public List<Visitor> getVisitors() {
-        return HospitalEoApplication.getRepository().getVisitors(visitorIds);
-    }
 
 
-    public void setVisitors(List<Visitor> list) {
-        this.visitorIds = list.stream().map(Visitor::getId).toList();
-    }
-
-
-    public List<String> getVisitorIds() {
+    public List<UUID> getVisitorIds() {
         return visitorIds;
     }
 
 
-    public void setVisitorIds(List<String> ids) {
+    public void setVisitorIds(List<UUID> ids) {
         this.visitorIds = ids;
     }
     public void addPatient(Patient patient) {

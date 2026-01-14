@@ -15,14 +15,14 @@ import java.util.UUID;
 public class Room implements  Serializable, Identifiable {
 
     private String name;
-    private List<String> patients;
-    private String id;
+    private List<UUID> patients;
+    private UUID id;
 
     /**
      * Konstruktor
      */
     public Room(String name) {
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID();
         this.patients = new ArrayList<>();
         this.name = name;
     }
@@ -39,12 +39,12 @@ public class Room implements  Serializable, Identifiable {
      * @return Id
      */
     @Override
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -67,12 +67,12 @@ public class Room implements  Serializable, Identifiable {
      * @return Lista ID-ova pacijenata (za serijalizaciju)
      */
 
-    public List<String> getPatientsId() {
+    public List<UUID> getPatientsId() {
         return patients;
     }
 
 
-    public void setPatientsId(List<String> patients) {
+    public void setPatientsId(List<UUID> patients) {
         this.patients = patients;
     }
 

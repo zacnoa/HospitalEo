@@ -14,13 +14,15 @@ import util.DialogUtils;
 import util.RepositoryUtils;
 import util.StringCheckerUtils;
 
+import java.util.UUID;
+
 public class RoomCreationScreenController {
 
     @FXML
     private TextField roomName;
 
     @FXML
-    private ObjectProperty<String> selectedDepartmentId=new SimpleObjectProperty<>();
+    private ObjectProperty<UUID> selectedDepartmentId=new SimpleObjectProperty<>();
     @FXML
     private IdentifiableComboBox departmentComboBox;
 
@@ -42,7 +44,7 @@ public class RoomCreationScreenController {
             DialogUtils.showEntityCreationsErrorDialog("Molim vas ispunite sva polja");
             return false;
         }
-        else if(selectedDepartmentId.get().isEmpty())
+        else if(departmentComboBox.getSelectionModel().isEmpty())
         {
             DialogUtils.showEntityCreationsErrorDialog("Molim odaberite odjel");
             return false;
