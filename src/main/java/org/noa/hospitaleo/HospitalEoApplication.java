@@ -5,7 +5,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.noa.hospitaleo.database.DatabaseConnectionFactory;
+import org.noa.hospitaleo.database.DatabaseConnection;
 import org.noa.hospitaleo.repository.MockEntityRepository;
 import org.noa.hospitaleo.repository.RepositoryFactory;
 import org.slf4j.Logger;
@@ -20,7 +20,11 @@ public class HospitalEoApplication extends Application {
     private static  Stage mainStage;
     private  static MockEntityRepository mockRepository= RepositoryFactory.getInstance();
     public static final Logger logger = LoggerFactory.getLogger(HospitalEoApplication.class);
-    private static final Connection connection= DatabaseConnectionFactory.getInstance().getConnection();
+    private static final DatabaseConnection connection= new DatabaseConnection();
+
+
+
+
     @Override
     @SuppressWarnings("java:S2696") // Nemozemo promijeniti signature metode posto radimo override
     public  void start(Stage stage) {
@@ -46,7 +50,7 @@ public class HospitalEoApplication extends Application {
     public static MockEntityRepository getRepository() {
         return mockRepository;
     }
-    public static Connection getConnection() {
+    public static DatabaseConnection getConnection() {
         return connection;
     }
 
