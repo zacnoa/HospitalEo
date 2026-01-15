@@ -3,9 +3,8 @@ package org.noa.hospitaleo.repository;
 import org.noa.hospitaleo.entity.*;
 import org.noa.hospitaleo.enums.PatientStatus;
 
-public class MockEntityRepository extends EntityRepository implements Loadable {
+public class MockCache extends EntityRepository  {
 
-    @Override
     public void loadAll() {
 
 
@@ -16,9 +15,9 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         super.getDepartmentMap().put(cardiology.getId(), cardiology);
 
 
-        Doctor neuroDoc1 = new Doctor.DoctorBuilder(
+        Doctor neuroDoc1 = new Doctor(
                 "Ivan Barišić", "12232144", "neurolog", 12.5
-        ).build();
+        );
 
         neurology.addDoctor(neuroDoc1);
         super.getDoctorMap().put(neuroDoc1.getId(), neuroDoc1);
@@ -42,9 +41,9 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         super.getPatientMap().put(neuroPatient1.getId(), neuroPatient1);
 
 
-        Doctor neuroDoc2 = new Doctor.DoctorBuilder(
+        Doctor neuroDoc2 = new Doctor(
                 "Marija Novak", "98765432", "neurolog", 10.0
-        ).build();
+        );
 
         neurology.addDoctor(neuroDoc2);
         super.getDoctorMap().put(neuroDoc2.getId(), neuroDoc2);
@@ -68,9 +67,9 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         super.getPatientMap().put(neuroPatient2.getId(), neuroPatient2);
 
 
-        Doctor cardioDoc1 = new Doctor.DoctorBuilder(
+        Doctor cardioDoc1 = new Doctor(
                 "Marko Horvat", "22334455", "kardiolog", 15.0
-        ).build();
+        );
 
         cardiology.addDoctor(cardioDoc1);
         super.getDoctorMap().put(cardioDoc1.getId(), cardioDoc1);
@@ -94,9 +93,9 @@ public class MockEntityRepository extends EntityRepository implements Loadable {
         super.getPatientMap().put(cardioPatient1.getId(), cardioPatient1);
 
 
-        Doctor cardioDoc2 = new Doctor.DoctorBuilder(
+        Doctor cardioDoc2 = new Doctor(
                 "Ivana Križman", "66778899", "kardiolog", 13.0
-        ).build();
+        );
 
         cardiology.addDoctor(cardioDoc2);
         super.getDoctorMap().put(cardioDoc2.getId(), cardioDoc2);

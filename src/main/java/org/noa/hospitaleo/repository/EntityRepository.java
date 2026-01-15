@@ -3,6 +3,7 @@ package org.noa.hospitaleo.repository;
 import org.noa.hospitaleo.entity.*;
 
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,4 +112,5 @@ public abstract class EntityRepository {
                 .toList();
     }
 
+    public abstract void loadAll()  throws SQLException;
 }

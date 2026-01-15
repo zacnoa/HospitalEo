@@ -25,6 +25,11 @@ public class Department implements  Serializable, Identifiable {
         this.name = name;
         this.id = UUID.randomUUID();
     }
+    public Department(String name, UUID id)
+    {
+        this.name = name;
+        this.id = id;
+    }
 
 
     @JsonbTransient

@@ -28,6 +28,12 @@ public abstract class Person implements Serializable, Identifiable {
         this.id = UUID.randomUUID();
 
     }
+    protected Person(String name, String oib, UUID id)
+    {
+        this.name = name;
+        this.oib = oib;
+        this.id = id;
+    }
 
     /**
      * @return Ime

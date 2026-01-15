@@ -26,6 +26,11 @@ public class Room implements  Serializable, Identifiable {
         this.patients = new ArrayList<>();
         this.name = name;
     }
+    public Room(String name, UUID id)
+    {
+        this.name = name;
+        this.id = id;
+    }
 
     @Override
     public String getName() {

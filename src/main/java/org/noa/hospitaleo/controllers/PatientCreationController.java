@@ -143,6 +143,7 @@ public class PatientCreationController {
         HospitalEoApplication.getRepository().getPatientMap().put(temp.getId(), temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan pacijent:"+" "+patientName.getText());
         HospitalEoApplication.logger.info("Uspjesno je zapisan pacijent:{}",patientName.getText());
+
         reset();
         return true;
     }

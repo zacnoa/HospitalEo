@@ -10,18 +10,22 @@ import java.util.UUID;
 import org.noa.hospitaleo.HospitalEoApplication;
 
 
-
 public final class Doctor extends Employee implements  Serializable {
 
     private String specialty;
     private List<UUID> patientIds;
 
-
-
-    private Doctor(DoctorBuilder doctorBuilder) {
-        super(doctorBuilder.name, doctorBuilder.oib, doctorBuilder.salary);
-        this.specialty = doctorBuilder.specialty;
-        this.patientIds = doctorBuilder.patients;
+    public Doctor(String name, String oib, String specialty,Double salary)
+    {
+        super(name,oib,salary);
+        this.specialty = specialty;
+        this.patientIds = new ArrayList<>();
+    }
+    public Doctor(String name, String oib,UUID id,Double salary,String specialty)
+    {
+        super(name,oib,salary,id);
+        this.specialty = specialty;
+        this.patientIds = new ArrayList<>();
     }
 
 
@@ -60,32 +64,4 @@ public final class Doctor extends Employee implements  Serializable {
     }
 
 
-
-
-    public static class DoctorBuilder {
-        private final String name;
-        private final String oib;
-        private final String specialty;
-        private final Double salary;
-        private List<UUID> patients;
-
-        public DoctorBuilder(String name, String oib, String specialty, Double salary) {
-            this.name = name;
-            this.oib = oib;
-            this.specialty = specialty;
-            this.salary = salary;
-            this.patients = new ArrayList<>();
-        }
-
-        public DoctorBuilder patients(List<Patient> patients) {
-            this.patients = patients.stream()
-                    .map(Patient::getId)
-                    .toList();
-            return this;
-        }
-
-        public Doctor build() {
-            return new Doctor(this);
-        }
-    }
 }

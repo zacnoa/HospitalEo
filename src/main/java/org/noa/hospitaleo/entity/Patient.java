@@ -22,7 +22,13 @@ public class Patient extends Person implements  Serializable {
         this.status = status;
         this.roomId = roomId;
     }
-
+    public Patient(String name, String oib, String diagnosis,UUID doctorId,UUID roomId, PatientStatus status,UUID id) {
+        super(name, oib,id);
+        this.diagnosis = diagnosis;
+        this.doctorId = doctorId;
+        this.status = status;
+        this.roomId = roomId;
+    }
 
 
 

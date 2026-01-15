@@ -1,6 +1,8 @@
 package org.noa.hospitaleo.entity;
 
 
+import java.util.UUID;
+
 public abstract class Employee extends Person {
 
     private Double salary;
@@ -8,6 +10,9 @@ public abstract class Employee extends Person {
     protected Employee(String name, String oib, Double salary) {
         super(name, oib);
         this.salary = salary;
+    }
+    protected Employee(String name, String oib, Double salary,UUID id) {
+        super(name, oib,id);
     }
 
 

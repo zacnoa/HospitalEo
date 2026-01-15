@@ -5,32 +5,31 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.noa.hospitaleo.database.DatabaseConnection;
-import org.noa.hospitaleo.repository.MockEntityRepository;
-import org.noa.hospitaleo.repository.RepositoryFactory;
+import org.noa.hospitaleo.repository.EntityRepository;
+import org.noa.hospitaleo.repository.MockCache;
+import org.noa.hospitaleo.repository.RuntimeCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import util.DatabaseUtils;
 import util.DialogUtils;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class HospitalEoApplication extends Application {
 
+
     private static  Stage mainStage;
-    private  static MockEntityRepository mockRepository= RepositoryFactory.getInstance();
+    private  static EntityRepository repository;
     public static final Logger logger = LoggerFactory.getLogger(HospitalEoApplication.class);
-    private static final DatabaseConnection connection= new DatabaseConnection();
-
-
-
-
-    @Override
+    private static  Connection connection;
     @SuppressWarnings("java:S2696") // Nemozemo promijeniti signature metode posto radimo override
     public  void start(Stage stage) {
         try {
-            mockRepository = new MockEntityRepository();
-            mockRepository.loadAll();
+            connection = DatabaseUtils.getConnection();
+            repository = new RuntimeCache();
+            repository.loadAll();
             mainStage = stage;
             FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("main-screen.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -40,6 +39,11 @@ public class HospitalEoApplication extends Application {
         } catch (IOException ex) {
             DialogUtils.showIOError("Greska pri otvaranju aplikacije");
             logger.error(ex.getMessage(), ex);
+        }catch(SQLException ex)
+        {
+            ex.printStackTrace();
+            DialogUtils.showDatabaseErrorDialog("Greska pri ucitavanju podataka iz baze");
+            logger.error(ex.getMessage(), ex);
         }
 
         mainStage.setOnCloseRequest(event -> Platform.exit());
@@ -47,10 +51,10 @@ public class HospitalEoApplication extends Application {
     public static Stage getMainStage() {
         return mainStage;
     }
-    public static MockEntityRepository getRepository() {
-        return mockRepository;
+    public static EntityRepository getRepository() {
+        return repository;
     }
-    public static DatabaseConnection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 

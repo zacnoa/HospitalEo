@@ -19,6 +19,7 @@ import java.util.UUID;
 public class DoctorCreationScreenController {
 
     @FXML
+
     private TextField doctorName;
     @FXML
     private TextField doctorOib;
@@ -69,7 +70,7 @@ public class DoctorCreationScreenController {
             DialogUtils.showEntityCreationsErrorDialog("Molim vas unesite valjani broj");
             return false;
         }
-        Doctor temp= new Doctor.DoctorBuilder(doctorName.getText(),doctorOib.getText(),doctorSpecialty.getText(),salary).build();
+        Doctor temp= new Doctor(doctorName.getText(),doctorOib.getText(),doctorSpecialty.getText(),salary);
         HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).addDoctor(temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan doktor:"+" "+doctorName.getText());
         HospitalEoApplication.logger.info("Uspjesno je zapisan doktor:{}",doctorName.getText());
