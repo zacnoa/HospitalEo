@@ -1,4 +1,4 @@
-package org.noa.hospitaleo.repository;
+package org.noa.hospitaleo.backend;
 
 import org.noa.hospitaleo.entity.*;
 

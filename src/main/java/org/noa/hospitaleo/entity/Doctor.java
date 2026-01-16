@@ -13,19 +13,16 @@ import org.noa.hospitaleo.HospitalEoApplication;
 public final class Doctor extends Employee implements  Serializable {
 
     private String specialty;
-    private List<UUID> patientIds;
 
     public Doctor(String name, String oib, String specialty,Double salary)
     {
         super(name,oib,salary);
         this.specialty = specialty;
-        this.patientIds = new ArrayList<>();
     }
-    public Doctor(String name, String oib,UUID id,Double salary,String specialty)
+    public Doctor(String name, String oib, String specialty,Double salary,UUID id)
     {
         super(name,oib,salary,id);
         this.specialty = specialty;
-        this.patientIds = new ArrayList<>();
     }
 
 
@@ -35,12 +32,6 @@ public final class Doctor extends Employee implements  Serializable {
         return HospitalEoApplication.getRepository().getPatients(patientIds);
     }
 
-    @JsonbTransient
-    public void setPatients(List<Patient> patients) {
-        this.patientIds = patients.stream()
-                .map(Patient::getId)
-                .toList();
-    }
 
     public String getSpecialty() {
         return specialty;
@@ -51,13 +42,7 @@ public final class Doctor extends Employee implements  Serializable {
         this.specialty = specialty;
     }
 
-    public List<UUID> getPatientIds() {
-        return patientIds;
-    }
 
-    public void setPatientIds(List<UUID> patients) {
-        this.patientIds = patients;
-    }
 
     public void addPatient(Patient patient) {
         patientIds.add(patient.getId());

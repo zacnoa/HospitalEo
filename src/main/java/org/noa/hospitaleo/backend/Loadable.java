@@ -1,4 +1,4 @@
-package org.noa.hospitaleo.repository;
+package org.noa.hospitaleo.backend;
 
 public interface Loadable {
     void loadAll();
