@@ -11,10 +11,12 @@ import org.noa.hospitaleo.components.IdentifiableComboBox;
 import org.noa.hospitaleo.entity.*;
 import org.noa.hospitaleo.enums.PatientStatus;
 
+import util.DatabaseUtils;
 import util.DialogUtils;
-import util.RepositoryUtils;
+import util.Utils;
 import util.StringCheckerUtils;
 
+import java.sql.SQLException;
 import java.util.UUID;
 
 
@@ -55,22 +57,35 @@ public class PatientCreationController {
 
 
     private void updateDoctorSelection() {
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.listToIdentifiableObservableList(
-                HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).getDoctors());
-        doctorComboBox.updateItems(options);
+        try {
+            ObservableList<IdentifiableEntity> options = DatabaseUtils.doctorsIdentifiableObservableList(HospitalEoApplication.getApi().getConnection(),selectedDepartmentId.getValue());
+            doctorComboBox.updateItems(options);
+        } catch (SQLException e) {
+            DialogUtils.showDatabaseErrorDialog("Greska pri dohvacanju doctora");
+            HospitalEoApplication.logger.error(e.getMessage(),e);
+        }
 
     }
     private void updateRoomSelection()
     {
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.listToIdentifiableObservableList(
-                HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).getRooms());
-        roomComboBox.updateItems(options);
+        try {
+            ObservableList<IdentifiableEntity> options = DatabaseUtils.roomsIdentifiableObservableList(HospitalEoApplication.getApi().getConnection(),selectedDepartmentId.getValue());
+            roomComboBox.updateItems(options);
+        } catch (SQLException e) {
+            DialogUtils.showDatabaseErrorDialog("Greska pri dohvacanju soba");
+            HospitalEoApplication.logger.error(e.getMessage(),e);
+        }
     }
     @FXML
     private void initialize() {
 
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(HospitalEoApplication.getRepository().getDepartmentMap());
-        departmentComboBox.setUp(options,selectedDepartmentId,"Department");
+        try {
+            ObservableList<IdentifiableEntity> options = DatabaseUtils.departmentsIdentifiableObservableList(HospitalEoApplication.getApi().getConnection());
+            departmentComboBox.setUp(options,selectedDepartmentId,"Department");
+        } catch (SQLException e) {
+            DialogUtils.showDatabaseErrorDialog("Greska pri dohvacanju department");
+            HospitalEoApplication.logger.error(e.getMessage(),e);
+        }
         doctorComboBox.setUp(selectedDoctorId,"Doctor");
         roomComboBox.setUp(selectedRoomId,"Room");
 
@@ -98,7 +113,6 @@ public class PatientCreationController {
 
     @FXML
     private boolean handleSubmit() {
-        Patient temp;
         if (StringCheckerUtils.isNullOrEmpty(patientName.getText(), patientOIB.getText(), patientDiagnosis.getText()))
         {
             DialogUtils.showEntityCreationsErrorDialog("Molim vas ispunite sva polja vezane za ime,OIB i dijagnozu");
@@ -119,7 +133,7 @@ public class PatientCreationController {
 
          else if(underageFlag.isSelected())
          {
-              temp= new UnderagePatient(
+             UnderagePatient temp= new UnderagePatient(
                      patientName.getText(),
                      patientOIB.getText(),
                      patientDiagnosis.getText(),
@@ -127,20 +141,32 @@ public class PatientCreationController {
                      selectedRoomId.get(),
                      new Visitor(guardianName.getText(), guardianOIB.getText()),
                      PatientStatus.HOSPITALIZED);
+              try
+              {
+                  HospitalEoApplication.getApi().addUnderagePatient(temp,selectedDepartmentId.getValue());
+              }catch(SQLException e)
+              {
+                  HospitalEoApplication.logger.error(e.getMessage(),e);
+                  DialogUtils.showDatabaseErrorDialog("Doslo je do pogreske pri zapisivanju underagepatient");
+              }
 
          }
          else {
-             temp = new Patient(
+
+             Patient temp = new Patient(
                     patientName.getText(),
                     patientOIB.getText(),
                     patientDiagnosis.getText(), selectedDoctorId.get(),
                     selectedRoomId.get(),
                     PatientStatus.HOSPITALIZED);
+            try {
+                HospitalEoApplication.getApi().addPatient(temp,selectedDepartmentId.getValue());
+            } catch (SQLException e) {
+                DialogUtils.showDatabaseErrorDialog("Greska pri spremanju pacijenta");
+                HospitalEoApplication.logger.error(e.getMessage(),e);
+            }
+
         }
-        HospitalEoApplication.getRepository().getDoctor(selectedDoctorId.get()).addPatient(temp);
-        HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).addPatient(temp);
-        HospitalEoApplication.getRepository().getRoom(selectedRoomId.get()).addPatient(temp);
-        HospitalEoApplication.getRepository().getPatientMap().put(temp.getId(), temp);
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan pacijent:"+" "+patientName.getText());
         HospitalEoApplication.logger.info("Uspjesno je zapisan pacijent:{}",patientName.getText());
 

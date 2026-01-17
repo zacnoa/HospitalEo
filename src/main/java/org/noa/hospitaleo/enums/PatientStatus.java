@@ -13,8 +13,22 @@ public enum PatientStatus {
         this.status=status;
     }
 
-    public String getStatus(){
-        return status;
+    public String getValue() {
+        return switch (this) {
+            case HOSPITALIZED -> "Hospitaliziran";
+            case DISCHARGED -> "Otpušten";
+            case UNDER_DIAGNOSIS -> "Na pregledu";
+        };
     }
+    public static PatientStatus fromValue(String value) {
+        return switch (value) {
+            case "Hospitaliziran" -> HOSPITALIZED;
+            case "Otpušten" -> DISCHARGED;
+            case "Na pregledu" -> UNDER_DIAGNOSIS;
+            default -> null;
+        };
+    }
+
+
 
 }

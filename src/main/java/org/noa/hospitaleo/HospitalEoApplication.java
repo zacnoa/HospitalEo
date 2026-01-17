@@ -5,8 +5,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.noa.hospitaleo.backend.DatabaseAPI;
 import org.noa.hospitaleo.backend.EntityRepository;
-import org.noa.hospitaleo.backend.RuntimeCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.DatabaseUtils;
@@ -20,15 +20,13 @@ public class HospitalEoApplication extends Application {
 
 
     private static  Stage mainStage;
-    private  static EntityRepository repository;
     public static final Logger logger = LoggerFactory.getLogger(HospitalEoApplication.class);
-    private static  Connection connection;
+    private static DatabaseAPI api;
+
     @SuppressWarnings("java:S2696") // Nemozemo promijeniti signature metode posto radimo override
     public  void start(Stage stage) {
         try {
-            connection = DatabaseUtils.getConnection();
-            repository = new RuntimeCache();
-            repository.loadAll();
+            api=new DatabaseAPI(DatabaseUtils.getConnection());
             mainStage = stage;
             FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("main-screen.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -50,12 +48,11 @@ public class HospitalEoApplication extends Application {
     public static Stage getMainStage() {
         return mainStage;
     }
-    public static EntityRepository getRepository() {
-        return repository;
+
+    public static DatabaseAPI getApi() {
+        return api;
     }
-    public static Connection getConnection() {
-        return connection;
-    }
+
 
 
 }

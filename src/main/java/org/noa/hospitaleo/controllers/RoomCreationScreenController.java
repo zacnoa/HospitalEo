@@ -2,21 +2,27 @@ package org.noa.hospitaleo.controllers;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.components.IdentifiableComboBox;
+import org.noa.hospitaleo.entity.Department;
 import org.noa.hospitaleo.entity.IdentifiableEntity;
 import org.noa.hospitaleo.entity.Room;
 
+import util.DatabaseUtils;
 import util.DialogUtils;
-import util.RepositoryUtils;
+import util.Utils;
 import util.StringCheckerUtils;
 
+import java.sql.SQLException;
+import java.util.List;
 import java.util.UUID;
 
 public class RoomCreationScreenController {
+
 
     @FXML
     private TextField roomName;
@@ -27,11 +33,15 @@ public class RoomCreationScreenController {
     private IdentifiableComboBox departmentComboBox;
 
     @FXML
-    private void initialize() {
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(HospitalEoApplication.getRepository().getDepartmentMap());
-        departmentComboBox.setUp(options,selectedDepartmentId,"Department");
+     private void initialize() {
+        try {
+            ObservableList<IdentifiableEntity> options = DatabaseUtils.departmentsIdentifiableObservableList(HospitalEoApplication.getApi().getConnection());
+            departmentComboBox.setUp(options,selectedDepartmentId,"Department");
+        } catch (SQLException e) {
+            HospitalEoApplication.logger.error(e.getMessage(),e);
+            DialogUtils.showDatabaseErrorDialog("Greska pri dohvacanju department");
+        }
     }
-
     private void reset()
     {
         roomName.clear();
@@ -51,7 +61,16 @@ public class RoomCreationScreenController {
         }
 
         Room temp=new Room(roomName.getText());
-        HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).addRoom(temp);
+       try
+       {
+            HospitalEoApplication.getApi().addRoom(temp,selectedDepartmentId.getValue());
+       }catch(SQLException e)
+       {
+           DialogUtils.showDatabaseErrorDialog("Greska pri zapisivanju sobe");
+           HospitalEoApplication.logger.error(e.getMessage(),e);
+       }
+
+
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisana soba:"+" "+roomName.getText());
         HospitalEoApplication.logger.info("Uspjesno je zapisana soba:{}",roomName.getText());
         reset();

@@ -11,7 +11,8 @@ import org.noa.hospitaleo.HospitalEoApplication;
 import org.noa.hospitaleo.entity.Patient;
 import util.DialogUtils;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PatientSearchScreenController {
@@ -62,6 +63,7 @@ public class PatientSearchScreenController {
     @FXML
     private void searchPatientByParameter() {
 
+        List<Patient> temp = new ArrayList<>();
         String name = patientName.getText();
         String oib = patientOIB.getText();
         String diagnosis = patientDiagnosis.getText();
@@ -74,13 +76,16 @@ public class PatientSearchScreenController {
 
         else {
 
-            ObservableList<Patient> observableList = FXCollections.observableList(
-                    HospitalEoApplication.getRepository().allPatientsAsList().stream()
-                            .filter(d -> name.isEmpty() || d.getName().toLowerCase().contains(name.toLowerCase()))
-                            .filter(d -> oib.isEmpty() || d.getOib().equals(oib))
-                            .filter(d -> diagnosis.isEmpty() || d.getDiagnosis().toLowerCase().contains(diagnosis.toLowerCase()))
-                            .toList()
-            );
+            try
+            {
+                 temp.addAll(HospitalEoApplication.getApi().patientSearch(name,oib,diagnosis));
+            }catch(Exception ex)
+            {
+                DialogUtils.showDatabaseErrorDialog("Greska pri pretrazi za pacijentom");
+                HospitalEoApplication.logger.error(ex.getMessage(),ex);
+            }
+
+            ObservableList<Patient> observableList = FXCollections.observableList(temp);
             patientTable.setItems(observableList);
         }
 

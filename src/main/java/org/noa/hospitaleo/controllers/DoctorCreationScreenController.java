@@ -10,10 +10,12 @@ import org.noa.hospitaleo.components.IdentifiableComboBox;
 import org.noa.hospitaleo.entity.Doctor;
 import org.noa.hospitaleo.entity.IdentifiableEntity;
 
+import util.DatabaseUtils;
 import util.DialogUtils;
-import util.RepositoryUtils;
+import util.Utils;
 import util.StringCheckerUtils;
 
+import java.sql.SQLException;
 import java.util.UUID;
 
 public class DoctorCreationScreenController {
@@ -37,8 +39,13 @@ public class DoctorCreationScreenController {
 
     @FXML
     private void initialize() {
-        ObservableList<IdentifiableEntity> options = RepositoryUtils.mapToIdentifiableObservableList(HospitalEoApplication.getRepository().getDepartmentMap());
-        departmentComboBox.setUp(options,selectedDepartmentId,"Department");
+        try {
+            ObservableList<IdentifiableEntity> options = DatabaseUtils.departmentsIdentifiableObservableList(HospitalEoApplication.getApi().getConnection());
+            departmentComboBox.setUp(options,selectedDepartmentId,"Department");
+        } catch (SQLException e) {
+            HospitalEoApplication.logger.error(e.getMessage(),e);
+            DialogUtils.showDatabaseErrorDialog("Greska pri dohvacanju department");
+        }
     }
     private void reset()
     {
@@ -71,7 +78,14 @@ public class DoctorCreationScreenController {
             return false;
         }
         Doctor temp= new Doctor(doctorName.getText(),doctorOib.getText(),doctorSpecialty.getText(),salary);
-        HospitalEoApplication.getRepository().getDepartment(selectedDepartmentId.get()).addDoctor(temp);
+        try
+        {
+            HospitalEoApplication.getApi().addDoctor(temp,selectedDepartmentId.getValue());
+        }catch(SQLException e)
+        {
+            DialogUtils.showDatabaseErrorDialog("Greska pri pisanju doktora");
+            HospitalEoApplication.logger.error(e.getMessage(),e);
+        }
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan doktor:"+" "+doctorName.getText());
         HospitalEoApplication.logger.info("Uspjesno je zapisan doktor:{}",doctorName.getText());
         reset();

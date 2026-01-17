@@ -1,8 +1,14 @@
 package util;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.noa.hospitaleo.HospitalEoApplication;
+import org.noa.hospitaleo.backend.routes.DepartmentRoutes;
+import org.noa.hospitaleo.backend.routes.DoctorRoutes;
+import org.noa.hospitaleo.backend.routes.RoomRoutes;
 import org.noa.hospitaleo.entity.Department;
 import org.noa.hospitaleo.entity.Doctor;
+import org.noa.hospitaleo.entity.IdentifiableEntity;
 import org.noa.hospitaleo.entity.Room;
 import org.noa.hospitaleo.enums.Tables;
 
@@ -32,39 +38,28 @@ public class DatabaseUtils {
 
         return connection;
     }
-    public static void fillDepartment(Department department) throws SQLException
+
+
+    public static ObservableList<IdentifiableEntity> departmentsIdentifiableObservableList(Connection connection) throws SQLException
     {
-        department.setPatientIds(getChildrenIds(department.getId(),Tables.PATIENTS, "departmentId"));
-        department.setRoomIds(getChildrenIds(department.getId(),Tables.ROOMS,"departmentId"));
-        department.setDoctorIds(getChildrenIds(department.getId(),Tables.DOCTORS,"departmentId"));
-        department.setVisitorIds(getChildrenIds(department.getId(),Tables.VISITORS,"departmentId"));
+
+        List<Department> result = DepartmentRoutes.getAllDepartments(connection);
+        return Utils.listToIdentifiableObservableList(result);
+
     }
-    public static void  fillRoom(Room room) throws SQLException
+    public static ObservableList<IdentifiableEntity> doctorsIdentifiableObservableList(Connection connection, UUID departmentId) throws SQLException
     {
-        room.setPatientsId(getChildrenIds(room.getId(),Tables.PATIENTS, "roomId"));
+
+        List<Doctor> result = DoctorRoutes.getDepartmentDoctors(departmentId,connection);
+        return Utils.listToIdentifiableObservableList(result);
+
     }
-    public static void fillDoctor(Doctor doctor)  throws SQLException
+    public static ObservableList<IdentifiableEntity> roomsIdentifiableObservableList(Connection connection,UUID departmentId) throws SQLException
     {
-        doctor.setPatientIds(getChildrenIds(doctor.getId(),Tables.PATIENTS,"doctorId"));
-    }
 
+        List<Room> result = RoomRoutes.getDepartmentRooms(departmentId,connection);
+        return Utils.listToIdentifiableObservableList(result);
 
-    private static List<UUID> getChildrenIds(UUID parentId, Tables childrenTable, String propertyName) throws SQLException {
-        List<UUID> idList = new ArrayList<>();
-        Connection connection = HospitalEoApplication.getConnection();
-        String query = "SELECT id FROM " + childrenTable.getTable() + " WHERE " + propertyName + " = ?";
-
-        try (PreparedStatement prmst = connection.prepareStatement(query)) {
-            prmst.setObject(1, parentId);
-
-            try (ResultSet rs = prmst.executeQuery()) {
-                while (rs.next()) {
-                    idList.add(rs.getObject("id", UUID.class));
-                }
-            }
-        }
-
-        return idList;
     }
 
 }

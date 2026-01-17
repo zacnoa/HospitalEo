@@ -10,9 +10,9 @@ import org.noa.hospitaleo.interfaces.Identifiable;
 import java.util.List;
 import java.util.Map;
 
-public class RepositoryUtils {
+public class Utils {
 
-    private RepositoryUtils() {}
+    private Utils() {}
 
     public static <T extends Identifiable> ObservableList<IdentifiableEntity> mapToIdentifiableObservableList(Map<?, T> map) {
         return FXCollections.observableArrayList(

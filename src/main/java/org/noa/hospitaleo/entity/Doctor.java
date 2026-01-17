@@ -14,22 +14,14 @@ public final class Doctor extends Employee implements  Serializable {
 
     private String specialty;
 
-    public Doctor(String name, String oib, String specialty,Double salary)
-    {
-        super(name,oib,salary);
-        this.specialty = specialty;
-    }
-    public Doctor(String name, String oib, String specialty,Double salary,UUID id)
-    {
-        super(name,oib,salary,id);
+    public Doctor(String name, String oib, String specialty, Double salary) {
+        super(name, oib, salary);
         this.specialty = specialty;
     }
 
-
-
-    @JsonbTransient
-    public List<Patient> getPatients() {
-        return HospitalEoApplication.getRepository().getPatients(patientIds);
+    public Doctor(String name, String oib, String specialty, Double salary, UUID id) {
+        super(name, oib, salary, id);
+        this.specialty = specialty;
     }
 
 
@@ -41,12 +33,6 @@ public final class Doctor extends Employee implements  Serializable {
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }
-
-
-
-    public void addPatient(Patient patient) {
-        patientIds.add(patient.getId());
-    }
-
-
 }
+
+

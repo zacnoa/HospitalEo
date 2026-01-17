@@ -1,51 +1,64 @@
 package org.noa.hospitaleo.backend;
 
-import org.noa.hospitaleo.entity.Doctor;
+import org.noa.hospitaleo.backend.routes.*;
+import org.noa.hospitaleo.entity.*;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class DatabaseAPI {
-    private static Connection connection;
+    private  Connection connection;
     public DatabaseAPI(Connection connection) {
-        DatabaseAPI.connection = connection;
+        this.connection = connection;
     }
-    public static List<Doctor> getDepartmentDoctors(UUID departmentId ) throws SQLException {
-        List<Doctor> doctors = new ArrayList<>();
-        String query = """
-                SELECT PERSONS.name,
-                PERSONS.oib,
-                EMPLOYEES.salary,
-                DOCTORS.id,
-                DOCTORS.specialty
-                FROM DOCTORS
-                JOIN PERSONS ON DOCTORS.id = PERSONS.id
-                JOIN EMPLOYEES ON DOCTORS.id = EMPLOYEES.id 
-                WHERE DOCTORS.department.id = ?
-                """;
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setObject(1, departmentId);
-            try (ResultSet rs = statement.executeQuery()) {
-
-                while(rs.next())
-                {
-                    Doctor temp= new Doctor(
-                            rs.getString("name"),
-                            rs.getString("oib"),
-                            rs.getString("specialty"),
-                            rs.getDouble("salary"),
-                            rs.getObject("id", UUID.class)
-
-                    );
-                    doctors.add(temp);
-                }
-            }
-        }
-        return doctors;
+    public Connection getConnection() {
+        return connection;
     }
+
+    public  void addDepartment(Department department) throws SQLException
+    {
+        DepartmentRoutes.insertDepartment(connection,department);
+    }
+    public void addRoom(Room room,UUID departmentId) throws SQLException
+    {
+        RoomRoutes.insertRoom(connection,room,departmentId);
+
+    }
+    public List<Department> getAllDepartments() throws SQLException
+    {
+        return DepartmentRoutes.getAllDepartments(connection);
+    }
+    public void addDoctor(Doctor doctor,UUID departmentId) throws SQLException
+    {
+        DoctorRoutes.insertDoctor(doctor,connection,departmentId);
+    }
+    public void addPatient(Patient patient, UUID departmentId) throws SQLException
+    {
+        PatientRoutes.insertPatientTransactional(connection,patient,departmentId);
+    }
+    public void addUnderagePatient(UnderagePatient underagePatient, UUID departmentId) throws SQLException
+    {
+
+       UnderagePatientRoutes.insertUnderagePatient(underagePatient,departmentId,connection);
+    }
+    public List<Patient> getRoomPatients(UUID roomId) throws SQLException
+    {
+        return PatientRoutes.getRoomPatients(connection,roomId);
+    }
+    public Patient getPatient(UUID id) throws SQLException
+    {
+        return PatientRoutes.getPatient(connection,id);
+    }
+    public List<Patient> patientSearch(String name,String oib,String diagnosis) throws SQLException
+    {
+        return PatientRoutes.patientSearch(connection,name,oib,diagnosis);
+
+    }
+    public List<Doctor> doctorSearch(String name,String oib,String specialty) throws SQLException
+    {
+        return DoctorRoutes.searchDoctors(connection,name,oib,specialty);
+    }
+
 }

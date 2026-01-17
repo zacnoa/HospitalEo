@@ -1,6 +1,6 @@
 package org.noa.hospitaleo.backend;
 
-public interface Loadable {
+public interface Fetchable {
     void loadAll();
 
 }

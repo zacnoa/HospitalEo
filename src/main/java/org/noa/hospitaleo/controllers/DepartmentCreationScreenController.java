@@ -7,6 +7,8 @@ import org.noa.hospitaleo.entity.Department;
 import util.DialogUtils;
 import util.StringCheckerUtils;
 
+import java.sql.SQLException;
+
 
 public class DepartmentCreationScreenController {
 
@@ -27,7 +29,14 @@ public class DepartmentCreationScreenController {
             return false;
         }
         Department temp=new Department(departmentName.getText());
-        HospitalEoApplication.getRepository().getDepartmentMap().put(temp.getId(),temp);
+        try {
+            HospitalEoApplication.getApi().addDepartment(temp);
+        } catch (SQLException e) {
+            DialogUtils.showDatabaseErrorDialog("Greska pri spremanju doktora u bazu");
+            HospitalEoApplication.logger.error(e.getMessage(),e);
+        }
+
+
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan odjel:"+" "+departmentName.getText());
         HospitalEoApplication.logger.info("Uspjesno je zapisan odjel:{}",departmentName.getText());
         reset();

@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import org.noa.hospitaleo.entity.IdentifiableEntity;
 
-import util.RepositoryUtils;
+import util.Utils;
 
 import java.util.UUID;
 
@@ -18,7 +18,7 @@ public class IdentifiableComboBox extends ComboBox<IdentifiableEntity> {
     {
         promptTextProperty().set(prompt);
         setItems(items);
-        setConverter(RepositoryUtils.stringConverterFactory(items));
+        setConverter(Utils.stringConverterFactory(items));
 
         getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
@@ -50,7 +50,7 @@ public class IdentifiableComboBox extends ComboBox<IdentifiableEntity> {
     public void updateItems(ObservableList<IdentifiableEntity> options)
     {
         setItems(options);
-        setConverter(RepositoryUtils.stringConverterFactory(options));
+        setConverter(Utils.stringConverterFactory(options));
     }
 
 }

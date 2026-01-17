@@ -33,19 +33,9 @@ public class Patient extends Person implements  Serializable {
 
 
     @JsonbTransient
-    public Doctor getDoctor() {
-        return HospitalEoApplication.getRepository().getDoctor(doctorId);
-    }
-
-    @JsonbTransient
     public void setDoctor(Doctor doctor) {
         this.doctorId = doctor != null ? doctor.getId() : null;
     }
-    @JsonbTransient
-    public Room getRoom() {
-        return HospitalEoApplication.getRepository().getRoom(roomId);
-    }
-
     @JsonbTransient
     public void setRoom(Room room) {
         this.roomId = room != null ? room.getId() : null;

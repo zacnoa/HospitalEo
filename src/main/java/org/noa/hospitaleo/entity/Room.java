@@ -1,6 +1,8 @@
 package org.noa.hospitaleo.entity;
 
+import javafx.scene.chart.PieChart;
 import org.noa.hospitaleo.HospitalEoApplication;
+import org.noa.hospitaleo.backend.routes.PatientRoutes;
 import org.noa.hospitaleo.interfaces.Identifiable;
 
 import java.io.Serializable;
@@ -15,7 +17,6 @@ import java.util.UUID;
 public class Room implements  Serializable, Identifiable {
 
     private String name;
-    private List<UUID> patients;
     private UUID id;
 
     /**
@@ -23,7 +24,7 @@ public class Room implements  Serializable, Identifiable {
      */
     public Room(String name) {
         this.id = UUID.randomUUID();
-        this.patients = new ArrayList<>();
+
         this.name = name;
     }
     public Room(String name, UUID id)
@@ -53,41 +54,6 @@ public class Room implements  Serializable, Identifiable {
         this.id = id;
     }
 
-    /**
-     * @return Polje pacijenata (objekti)
-     */
-
-    public List<Patient> getPatients() {
-        return HospitalEoApplication.getRepository().getPatients(patients);
-    }
-
-
-    public void setPatients(List<Patient> patients) {
-        this.patients = patients.stream()
-                .map(Patient::getId)
-                .toList();
-    }
-
-    /**
-     * @return Lista ID-ova pacijenata (za serijalizaciju)
-     */
-
-    public List<UUID> getPatientsId() {
-        return patients;
-    }
-
-
-    public void setPatientsId(List<UUID> patients) {
-        this.patients = patients;
-    }
-
-    /**
-     * Dodaje pacijenta u sobu
-     * @param patient pacijent
-     */
-    public void addPatient(Patient patient) {
-        patients.add(patient.getId());
-    }
 
 
 }

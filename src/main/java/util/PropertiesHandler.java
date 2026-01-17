@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class PropertiesHandler {
 
-    private  final String  file = "properties";
+    private  final String  file = "properties.txt";
     private Properties properties;
     public PropertiesHandler() throws IOException
     {
