@@ -1,6 +1,8 @@
 package org.noa.hospitaleo.backend.routes;
 
-import org.noa.hospitaleo.entity.Department;
+import org.noa.hospitaleo.backend.utils.mappers.DepartmentMapper;
+import org.noa.hospitaleo.backend.utils.queries.DepartmentQueries;
+import org.noa.hospitaleo.frontend.entity.Department;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,29 +10,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class DepartmentRoutes {
 
+    private DepartmentRoutes() {}
 
     public static List<Department> getAllDepartments(Connection connection) throws SQLException
     {
        List<Department> departments = new ArrayList<>();
-       String query = """
-              SELECT * FROM DEPARTMENTS 
-               """;
+       String query = DepartmentQueries.GET_ALL_DEPARTMENTS.getQuery();
        try(PreparedStatement statement = connection.prepareStatement(query))
        {
            try(ResultSet rs = statement.executeQuery())
            {
-               while(rs.next())
-               {
-                   Department temp = new Department(
-                           rs.getString("name"),
-                           rs.getObject("id", UUID.class)
-                   );
-                   departments.add(temp);
-               }
+               departments= DepartmentMapper.mapToDepartmentList(rs);
            }
        }
        return departments;
@@ -38,9 +31,7 @@ public class DepartmentRoutes {
 
     public static void insertDepartment(Connection connection, Department department) throws SQLException
     {
-        String query = """
-                INSERT INTO DEPARTMENTS (name, id)
-                VALUES(?, ?)""";
+        String query = DepartmentQueries.INSERT_DEPARTMENT.getQuery();
 
         try(PreparedStatement statement = connection.prepareStatement(query))
         {

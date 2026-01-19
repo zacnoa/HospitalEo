@@ -1,6 +1,6 @@
 package org.noa.hospitaleo.backend;
 
-import org.noa.hospitaleo.entity.*;
+import org.noa.hospitaleo.frontend.entity.*;
 
 
 import java.sql.SQLException;

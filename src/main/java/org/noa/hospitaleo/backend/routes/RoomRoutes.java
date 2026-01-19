@@ -1,6 +1,7 @@
 package org.noa.hospitaleo.backend.routes;
 
-import org.noa.hospitaleo.entity.Room;
+import org.noa.hospitaleo.backend.utils.mappers.RoomMapper;
+import org.noa.hospitaleo.frontend.entity.Room;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class RoomRoutes {
+
+    private RoomRoutes() {}
 
     public static List<Room> getDepartmentRooms(UUID departmentId, Connection connection) throws SQLException {
         List<Room> rooms = new ArrayList<>();
@@ -25,13 +28,8 @@ public class RoomRoutes {
             preparedStatement.setObject(1, departmentId);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    Room temp = new Room(
-                            resultSet.getString("name"),
-                            resultSet.getObject("id", UUID.class)
-                    );
-                    rooms.add(temp);
-                }
+
+                rooms = RoomMapper.mapToRoomList(resultSet);
             }
         }
         return rooms;
@@ -50,12 +48,7 @@ public class RoomRoutes {
             preparedStatement.setObject(1, roomId);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    temp = new Room(
-                            resultSet.getString("name"),
-                            resultSet.getObject("id", UUID.class)
-                    );
-                }
+                temp = RoomMapper.mapToRoom(resultSet);
             }
         }
         return temp;

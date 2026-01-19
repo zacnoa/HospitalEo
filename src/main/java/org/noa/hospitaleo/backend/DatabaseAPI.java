@@ -1,7 +1,7 @@
 package org.noa.hospitaleo.backend;
 
 import org.noa.hospitaleo.backend.routes.*;
-import org.noa.hospitaleo.entity.*;
+import org.noa.hospitaleo.frontend.entity.*;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,16 +32,31 @@ public class DatabaseAPI {
     }
     public void addDoctor(Doctor doctor,UUID departmentId) throws SQLException
     {
+        connection.setAutoCommit(false);
+        PersonRoutes.insertPerson(connection,doctor);
+        EmployeeRoutes.insertEmployee(connection,doctor);
         DoctorRoutes.insertDoctor(doctor,connection,departmentId);
+        connection.commit();
+
     }
     public void addPatient(Patient patient, UUID departmentId) throws SQLException
     {
-        PatientRoutes.insertPatientTransactional(connection,patient,departmentId);
+        connection.setAutoCommit(false);
+        PersonRoutes.insertPerson(connection,patient);
+        PatientRoutes.insertPatient(connection,patient,departmentId);
+        connection.commit();
     }
     public void addUnderagePatient(UnderagePatient underagePatient, UUID departmentId) throws SQLException
     {
+        connection.setAutoCommit(false);
+        PersonRoutes.insertPerson(connection,underagePatient);
+        PatientRoutes.insertPatient(connection,underagePatient,departmentId);
 
-       UnderagePatientRoutes.insertUnderagePatient(underagePatient,departmentId,connection);
+        PersonRoutes.insertPerson(connection,underagePatient.getLegalGuardian());
+        VisitorRoutes.insertVisitor(underagePatient.getLegalGuardian(),connection,departmentId);
+
+        UnderagePatientRoutes.insertUnderagePatient(underagePatient,connection);
+       connection.commit();
     }
     public List<Patient> getRoomPatients(UUID roomId) throws SQLException
     {

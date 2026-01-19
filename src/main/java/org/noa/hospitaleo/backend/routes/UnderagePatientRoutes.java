@@ -1,26 +1,23 @@
 package org.noa.hospitaleo.backend.routes;
 
-import org.noa.hospitaleo.entity.UnderagePatient;
+import org.noa.hospitaleo.backend.utils.queries.UnderagePatientQueries;
+import org.noa.hospitaleo.frontend.entity.UnderagePatient;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.UUID;
 
 public class UnderagePatientRoutes {
 
-    public  static void insertUnderagePatient(UnderagePatient u, UUID departmentId, Connection connection) throws SQLException {
-        try {
-            connection.setAutoCommit(false);
+    private UnderagePatientRoutes() {}
 
-            PatientRoutes.insertPatient(connection, u, departmentId);
-            VisitorRoutes.insertVisitor(u.getLegalGuardian(), connection, departmentId);
+    public  static void insertUnderagePatient(UnderagePatient u, Connection connection) throws SQLException {
 
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.setAutoCommit(true);
+        String query = UnderagePatientQueries.INSERT_UNDERAGEPATIENT.getQuery();
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setObject(1,u.getId());
+            ps.setObject(2,u.getLegalGuardian().getId());
+            ps.executeUpdate();
         }
     }
 

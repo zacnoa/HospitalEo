@@ -6,14 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.noa.hospitaleo.backend.DatabaseAPI;
-import org.noa.hospitaleo.backend.EntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.DatabaseUtils;
-import util.DialogUtils;
+import org.noa.hospitaleo.backend.utils.DatabaseUtils;
+import org.noa.hospitaleo.frontend.util.DialogUtils;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class HospitalEoApplication extends Application {
@@ -25,9 +23,9 @@ public class HospitalEoApplication extends Application {
 
     @SuppressWarnings("java:S2696") // Nemozemo promijeniti signature metode posto radimo override
     public  void start(Stage stage) {
+        mainStage = stage;
         try {
             api=new DatabaseAPI(DatabaseUtils.getConnection());
-            mainStage = stage;
             FXMLLoader fxmlLoader = new FXMLLoader(HospitalEoApplication.class.getResource("main-screen.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle("Home");
@@ -39,7 +37,7 @@ public class HospitalEoApplication extends Application {
         }catch(SQLException ex)
         {
             ex.printStackTrace();
-            DialogUtils.showDatabaseErrorDialog("Greska pri ucitavanju podataka iz baze");
+            DialogUtils.showDatabaseErrorDialog("Greska pri spajanju na  bazu podataka");
             logger.error(ex.getMessage(), ex);
         }
 

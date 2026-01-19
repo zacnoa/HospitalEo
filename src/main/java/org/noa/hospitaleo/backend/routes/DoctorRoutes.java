@@ -1,6 +1,8 @@
 package org.noa.hospitaleo.backend.routes;
 
-import org.noa.hospitaleo.entity.Doctor;
+import org.noa.hospitaleo.backend.utils.mappers.DoctorMapper;
+import org.noa.hospitaleo.backend.utils.queries.DoctorQueries;
+import org.noa.hospitaleo.frontend.entity.Doctor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,51 +13,23 @@ import java.util.List;
 import java.util.UUID;
 
 public class DoctorRoutes {
+
+    private DoctorRoutes() {}
+
     public static List<Doctor> getDepartmentDoctors(UUID departmentId, Connection connection ) throws SQLException {
         List<Doctor> doctors = new ArrayList<>();
-        String query = """
-                SELECT PERSONS.name,
-                PERSONS.oib,
-                EMPLOYEES.salary,
-                DOCTORS.id,
-                DOCTORS.specialty
-                FROM DOCTORS
-                JOIN PERSONS ON DOCTORS.id = PERSONS.id
-                JOIN EMPLOYEES ON DOCTORS.id = EMPLOYEES.id 
-                WHERE DOCTORS.departmentId = ?
-                """;
+        String query = DoctorQueries.GET_DEPARTMENT_DOCTORS.getQuery();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setObject(1, departmentId);
             try (ResultSet rs = statement.executeQuery()) {
-
-                while(rs.next())
-                {
-                    Doctor temp= new Doctor(
-                            rs.getString("name"),
-                            rs.getString("oib"),
-                            rs.getString("specialty"),
-                            rs.getDouble("salary"),
-                            rs.getObject("id", UUID.class)
-
-                    );
-                    doctors.add(temp);
-                }
+                doctors= DoctorMapper.mapToDoctorList(rs);
             }
         }
         return doctors;
     }
     public static Doctor getDoctor(UUID doctorId,Connection connection) throws SQLException {
         Doctor temp = null;
-        String query = """
-                SELECT PERSONS.name,
-                PERSONS.oib,
-                EMPLOYEES.salary,
-                DOCTORS.id,
-                DOCTORS.specialty
-                FROM DOCTORS
-                JOIN PERSONS ON DOCTORS.id = PERSONS.id
-                JOIN EMPLOYEES ON DOCTORS.id = EMPLOYEES.id
-                WHERE DOCTORS.id = ? """;
+        String query = DoctorQueries.GET_DOCTOR.getQuery();
 
 
         try(PreparedStatement statement = connection.prepareStatement(query))
@@ -63,38 +37,14 @@ public class DoctorRoutes {
             statement.setObject(1,doctorId);
             try(ResultSet rs = statement.executeQuery())
             {
-                while(rs.next())
-                {
-                    temp = new Doctor(
-                            rs.getString("name"),
-                            rs.getString("oib"),
-                            rs.getString("specialty"),
-                            rs.getDouble("salary"),
-                            rs.getObject("id", UUID.class)
-                    );
-                }
+                temp= DoctorMapper.mapToDoctor(rs);
             }
         }
         return temp;
     }
     public static void insertDoctor(Doctor doctor,Connection connection,UUID departmentId) throws SQLException
     {
-        connection.setAutoCommit(false);
-        try {
-            PersonRoutes.insertPerson(connection, doctor);
-            EmployeeRoutes.insertEmployee(connection, doctor);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.setAutoCommit(true);
-        }
-
-        String query = """
-               INSERT INTO DOCTORS (id,departmentId,specialty) 
-               VALUES (?,?,?)
-                """;
+        String query =DoctorQueries.INSERT_DOCTOR.getQuery();
         try(PreparedStatement statement = connection.prepareStatement(query))
         {
             statement.setObject(1,doctor.getId());
@@ -106,21 +56,7 @@ public class DoctorRoutes {
     public static List<Doctor> searchDoctors(Connection connection, String name, String oib, String specialty) throws SQLException
     {
         List<Doctor> doctors = new ArrayList<>();
-        String query = """
-                SELECT
-                    d.id,
-                    p.name,
-                    p.oib,
-                    d.specialty,
-                    e.salary
-                FROM DOCTORS d
-                JOIN PERSONS p ON d.id = p.id
-                JOIN EMPLOYEES e ON d.id = e.id
-                WHERE
-                    ( ? = '' OR LOWER(p.name) LIKE LOWER(CONCAT('%', ?, '%')) )
-                AND ( ? = '' OR p.oib = ? )
-                AND ( ? = '' OR LOWER(d.specialty) LIKE LOWER(CONCAT('%', ?, '%')) );
-                """;
+        String query = DoctorQueries.DOCTOR_SEARCH.getQuery();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, name);
             statement.setString(2, name);
@@ -133,17 +69,8 @@ public class DoctorRoutes {
 
             try (ResultSet rs = statement.executeQuery()) {
 
-                while (rs.next()) {
-                    Doctor temp = new Doctor(
-                            rs.getString("name"),
-                            rs.getString("oib"),
-                            rs.getString("specialty"),
-                            rs.getDouble("salary"),
-                            rs.getObject("id", UUID.class)
+                doctors= DoctorMapper.mapToDoctorList(rs);
 
-                    );
-                    doctors.add(temp);
-                }
             }
         }
         return doctors;

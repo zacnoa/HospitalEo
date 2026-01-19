@@ -1,7 +1,8 @@
 package org.noa.hospitaleo.backend.routes;
 
-import org.noa.hospitaleo.entity.Patient;
-import org.noa.hospitaleo.enums.PatientStatus;
+import org.noa.hospitaleo.backend.utils.mappers.PatientMapper;
+import org.noa.hospitaleo.backend.utils.queries.PatientQueries;
+import org.noa.hospitaleo.frontend.entity.Patient;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,40 +14,17 @@ import java.util.UUID;
 
 public class PatientRoutes {
 
+    private PatientRoutes() {}
     public static List<Patient> getDepartmentPatients(Connection connection, UUID departmentId) throws SQLException {
         List<Patient> patients = new ArrayList<>();
-        String query = """
-                SELECT PERSONS.name,
-                       PERSONS.oib,
-                       PATIENTS.id,
-                       PATIENTS.diagnosis,
-                       PATIENTS.doctorId,
-                       PATIENTS.departmentId,
-                       PATIENTS.roomId,
-                       PATIENTS.status
-                FROM PATIENTS
-                JOIN PERSONS ON PATIENTS.id = PERSONS.id
-                WHERE PATIENTS.departmentId = ?
-                """;
+        String query = PatientQueries.GET_DEPARTMENT_PATIENTS.getQuery();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setObject(1, departmentId);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    PatientStatus status = PatientStatus.fromValue(resultSet.getString("status"));
 
-                    Patient temp = new Patient(
-                            resultSet.getString("name"),
-                            resultSet.getString("oib"),
-                            resultSet.getString("diagnosis"),
-                            resultSet.getObject("doctorId", UUID.class),
-                            resultSet.getObject("roomId", UUID.class),
-                            status,
-                            resultSet.getObject("id", UUID.class)
-                    );
-                    patients.add(temp);
-                }
+                patients = PatientMapper.mapToPatientList(resultSet);
             }
         }
         return patients;
@@ -54,49 +32,21 @@ public class PatientRoutes {
 
     public static Patient getPatient(Connection connection, UUID id) throws SQLException {
         Patient temp = null;
-        String query = """
-                SELECT PERSONS.name,
-                       PERSONS.oib,
-                       PATIENTS.id,
-                       PATIENTS.diagnosis,
-                       PATIENTS.doctorId,
-                       PATIENTS.departmentId,
-                       PATIENTS.roomId,
-                       PATIENTS.status
-                FROM PATIENTS
-                JOIN PERSONS ON PATIENTS.id = PERSONS.id
-                WHERE PATIENTS.id = ?
-                """;
+        String query = PatientQueries.GET_PATIENT.getQuery();
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setObject(1, id);
 
             try (ResultSet rs = statement.executeQuery()) {
-                if (rs.next()) {
-                    PatientStatus status = PatientStatus.fromValue(rs.getString("status"));
-
-                    temp = new Patient(
-                            rs.getString("name"),
-                            rs.getString("oib"),
-                            rs.getString("diagnosis"),
-                            rs.getObject("doctorId", UUID.class),
-                            rs.getObject("roomId", UUID.class),
-                            status,
-                            rs.getObject("id", UUID.class)
-                    );
-                }
+                temp = PatientMapper.mapToPatient(rs);
             }
         }
         return temp;
     }
 
     public static void insertPatient(Connection connection, Patient patient, UUID departmentId) throws SQLException {
-        PersonRoutes.insertPerson(connection, patient);
 
-        String query = """
-                INSERT INTO PATIENTS (id, departmentId, roomId, doctorId, status, diagnosis)
-                VALUES (?, ?, ?, ?, ?, ?)
-                """;
+        String query = PatientQueries.INSERT_PATIENT.getQuery();
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setObject(1, patient.getId());
@@ -108,53 +58,16 @@ public class PatientRoutes {
             statement.executeUpdate();
         }
     }
-    public static void insertPatientTransactional(Connection connection, Patient patient, UUID departmentId) throws SQLException {
-        try {
-            connection.setAutoCommit(false);
-            insertPatient(connection, patient, departmentId);
-            connection.commit();
-        } catch (SQLException e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.setAutoCommit(true);
-        }
-    }
 
     public static List<Patient> getRoomPatients(Connection connection, UUID roomId) throws SQLException {
         List<Patient> patients = new ArrayList<>();
-        String query = """
-                SELECT PERSONS.name,
-                       PERSONS.oib,
-                       PATIENTS.id,
-                       PATIENTS.diagnosis,
-                       PATIENTS.doctorId,
-                       PATIENTS.departmentId,
-                       PATIENTS.roomId,
-                       PATIENTS.status
-                FROM PATIENTS
-                JOIN PERSONS ON PATIENTS.id = PERSONS.id
-                WHERE PATIENTS.roomId = ?
-                """;
+        String query = PatientQueries.GET_ROOM_PATIENTS.getQuery();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setObject(1, roomId);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    PatientStatus status = PatientStatus.fromValue(resultSet.getString("status"));
-
-                    Patient temp = new Patient(
-                            resultSet.getString("name"),
-                            resultSet.getString("oib"),
-                            resultSet.getString("diagnosis"),
-                            resultSet.getObject("doctorId", UUID.class),
-                            resultSet.getObject("roomId", UUID.class),
-                            status,
-                            resultSet.getObject("id", UUID.class)
-                    );
-                    patients.add(temp);
-                }
+                patients= PatientMapper.mapToPatientList(resultSet);
             }
         }
         return patients;
@@ -162,22 +75,7 @@ public class PatientRoutes {
 
     public static List<Patient> patientSearch(Connection connection, String name, String oib, String diagnosis) throws SQLException {
         List<Patient> patients = new ArrayList<>();
-        String query = """
-                SELECT
-                    p.id,
-                    p.name,
-                    p.oib,
-                    pat.diagnosis,
-                    pat.status,
-                    pat.doctorId,
-                    pat.roomId
-                FROM PATIENTS pat
-                JOIN PERSONS p ON pat.id = p.id
-                WHERE
-                    ( ? = '' OR LOWER(p.name) LIKE LOWER(CONCAT('%', ?, '%')) )
-                AND ( ? = '' OR p.oib = ? )
-                AND ( ? = '' OR LOWER(pat.diagnosis) LIKE LOWER(CONCAT('%', ?, '%')) );
-                """;
+        String query = PatientQueries.PATIENT_SEARCH.getQuery();
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, name);
@@ -190,20 +88,9 @@ public class PatientRoutes {
             statement.setString(6, diagnosis);
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    PatientStatus status = PatientStatus.fromValue(resultSet.getString("status"));
 
-                    Patient temp = new Patient(
-                            resultSet.getString("name"),
-                            resultSet.getString("oib"),
-                            resultSet.getString("diagnosis"),
-                            resultSet.getObject("doctorId", UUID.class),
-                            resultSet.getObject("roomId", UUID.class),
-                            status,
-                            resultSet.getObject("id", UUID.class)
-                    );
-                    patients.add(temp);
-                }
+                patients= PatientMapper.mapToPatientList(resultSet);
+
             }
         }
         return patients;
