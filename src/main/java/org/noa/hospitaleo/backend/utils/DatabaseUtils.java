@@ -8,7 +8,6 @@ import org.noa.hospitaleo.frontend.entity.Department;
 import org.noa.hospitaleo.frontend.entity.Doctor;
 import org.noa.hospitaleo.frontend.entity.IdentifiableEntity;
 import org.noa.hospitaleo.frontend.entity.Room;
-import org.noa.hospitaleo.frontend.util.PropertiesHandler;
 import org.noa.hospitaleo.frontend.util.Utils;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class DatabaseUtils {
 
     public static Connection getConnection() throws IOException, SQLException
     {
-        Connection connection = null;
+        Connection connection;
             PropertiesHandler props= new PropertiesHandler();
             String url= props.getProperty("H2_URL");
             String username= props.getProperty("USER");

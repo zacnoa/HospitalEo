@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class DatabaseAPI {
-    private  Connection connection;
+    private final  Connection connection;
     public DatabaseAPI(Connection connection) {
         this.connection = connection;
     }
@@ -33,30 +33,50 @@ public class DatabaseAPI {
     public void addDoctor(Doctor doctor,UUID departmentId) throws SQLException
     {
         connection.setAutoCommit(false);
-        PersonRoutes.insertPerson(connection,doctor);
-        EmployeeRoutes.insertEmployee(connection,doctor);
-        DoctorRoutes.insertDoctor(doctor,connection,departmentId);
-        connection.commit();
+        try {
+            PersonRoutes.insertPerson(connection, doctor);
+            EmployeeRoutes.insertEmployee(connection, doctor);
+            DoctorRoutes.insertDoctor(doctor, connection, departmentId);
+            connection.commit();
+        }catch(SQLException e)
+        {
+            connection.rollback();
+            throw e;
+        }
 
     }
     public void addPatient(Patient patient, UUID departmentId) throws SQLException
     {
         connection.setAutoCommit(false);
-        PersonRoutes.insertPerson(connection,patient);
-        PatientRoutes.insertPatient(connection,patient,departmentId);
-        connection.commit();
+        try {
+            PersonRoutes.insertPerson(connection, patient);
+            PatientRoutes.insertPatient(connection, patient, departmentId);
+            connection.commit();
+        }catch(SQLException e)
+        {
+            connection.rollback();
+            throw e;
+        }
+
     }
     public void addUnderagePatient(UnderagePatient underagePatient, UUID departmentId) throws SQLException
     {
         connection.setAutoCommit(false);
-        PersonRoutes.insertPerson(connection,underagePatient);
-        PatientRoutes.insertPatient(connection,underagePatient,departmentId);
+        try {
+            PersonRoutes.insertPerson(connection, underagePatient);
+            PatientRoutes.insertPatient(connection, underagePatient, departmentId);
 
-        PersonRoutes.insertPerson(connection,underagePatient.getLegalGuardian());
-        VisitorRoutes.insertVisitor(underagePatient.getLegalGuardian(),connection,departmentId);
+            PersonRoutes.insertPerson(connection, underagePatient.getLegalGuardian());
+            VisitorRoutes.insertVisitor(underagePatient.getLegalGuardian(), connection, departmentId);
 
-        UnderagePatientRoutes.insertUnderagePatient(underagePatient,connection);
-       connection.commit();
+            UnderagePatientRoutes.insertUnderagePatient(underagePatient, connection);
+
+            connection.commit();
+        }catch(SQLException e)
+        {
+            connection.rollback();
+            throw e;
+        }
     }
     public List<Patient> getRoomPatients(UUID roomId) throws SQLException
     {
