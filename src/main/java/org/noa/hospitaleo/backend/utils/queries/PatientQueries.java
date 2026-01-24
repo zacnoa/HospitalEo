@@ -59,7 +59,8 @@ public enum PatientQueries {
                 WHERE
                     ( ? = '' OR LOWER(p.name) LIKE LOWER(CONCAT('%', ?, '%')) )
                 AND ( ? = '' OR p.oib = ? )
-                AND ( ? = '' OR LOWER(pat.diagnosis) LIKE LOWER(CONCAT('%', ?, '%')) );
+                AND ( ? = '' OR LOWER(pat.diagnosis) LIKE LOWER(CONCAT('%', ?, '%')) )
+                AND ( ? IS NULL OR pat.departmentId = ?)
                 """);
 
     private final String query;

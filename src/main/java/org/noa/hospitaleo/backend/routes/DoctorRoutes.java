@@ -53,7 +53,7 @@ public class DoctorRoutes {
             statement.executeUpdate();
         }
     }
-    public static List<Doctor> searchDoctors(Connection connection, String name, String oib, String specialty) throws SQLException
+    public static List<Doctor> searchDoctors(Connection connection, String name, String oib, String specialty,UUID departmentId) throws SQLException
     {
         List<Doctor> doctors = new ArrayList<>();
         String query = DoctorQueries.DOCTOR_SEARCH.getQuery();
@@ -66,6 +66,9 @@ public class DoctorRoutes {
 
             statement.setString(5, specialty);
             statement.setString(6, specialty);
+
+            statement.setObject(7, departmentId);
+            statement.setObject(8, departmentId);
 
             try (ResultSet rs = statement.executeQuery()) {
 

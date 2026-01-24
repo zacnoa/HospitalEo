@@ -6,6 +6,7 @@ import org.noa.hospitaleo.frontend.entity.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class DatabaseAPI {
@@ -86,14 +87,18 @@ public class DatabaseAPI {
     {
         return PatientRoutes.getPatient(connection,id);
     }
-    public List<Patient> patientSearch(String name,String oib,String diagnosis) throws SQLException
+    public List<Patient> patientSearch(String name,String oib,String diagnosis,UUID departmentId) throws SQLException
     {
-        return PatientRoutes.patientSearch(connection,name,oib,diagnosis);
+        return PatientRoutes.patientSearch(connection,name,oib,diagnosis,departmentId);
 
     }
-    public List<Doctor> doctorSearch(String name,String oib,String specialty) throws SQLException
+    public List<Doctor> doctorSearch(String name,String oib,String specialty,UUID departmentId) throws SQLException
     {
-        return DoctorRoutes.searchDoctors(connection,name,oib,specialty);
+        return DoctorRoutes.searchDoctors(connection,name,oib,specialty,departmentId);
+    }
+    public Map<String,Integer> getDepartmentStatistics(Department department) throws SQLException
+    {
+       return DepartmentRoutes.getDepartmentStatistics(connection,department.getId());
     }
 
 }

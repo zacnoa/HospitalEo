@@ -1,5 +1,7 @@
 package org.noa.hospitaleo.frontend.controllers;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,11 +10,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.noa.hospitaleo.HospitalEoApplication;
+import org.noa.hospitaleo.backend.utils.DatabaseUtils;
+import org.noa.hospitaleo.frontend.components.IdentifiableComboBox;
+import org.noa.hospitaleo.frontend.entity.Department;
 import org.noa.hospitaleo.frontend.entity.Patient;
 import org.noa.hospitaleo.frontend.util.DialogUtils;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class PatientSearchScreenController {
@@ -35,9 +42,14 @@ public class PatientSearchScreenController {
 
     @FXML
     private TableColumn<Patient,String> colPatientDiagnosis;
+    @FXML
+    private IdentifiableComboBox departmentComboBox;
+
+    private ObjectProperty<UUID> selectedDepartmentId = new SimpleObjectProperty<>();
 
     @FXML
     private void initialize() {
+        selectedDepartmentId.set(null);
         colPatientName.setCellValueFactory(param ->
                 new SimpleStringProperty(param.getValue().getName())
         );
@@ -49,6 +61,13 @@ public class PatientSearchScreenController {
         colPatientDiagnosis.setCellValueFactory(param ->
                 new SimpleStringProperty(param.getValue().getDiagnosis())
         );
+        try {
+            departmentComboBox.setUp(DatabaseUtils.departmentsIdentifiableObservableList(HospitalEoApplication.getApi().getConnection()),selectedDepartmentId,"Department");
+        } catch (SQLException e) {
+            HospitalEoApplication.logger.error(e.getMessage());
+            DialogUtils.showDatabaseErrorDialog("Greska pri dohvatu departments");
+        }
+
     }
 
 
@@ -58,6 +77,7 @@ public class PatientSearchScreenController {
         patientName.clear();
         patientOIB.clear();
         patientDiagnosis.clear();
+        departmentComboBox.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -69,16 +89,15 @@ public class PatientSearchScreenController {
         String diagnosis = patientDiagnosis.getText();
 
 
-        if (name.isEmpty() && oib.isEmpty() && diagnosis.isEmpty()) {
+        if (name.isEmpty() && oib.isEmpty() && diagnosis.isEmpty() && departmentComboBox.getSelectionModel().isEmpty()) {
             DialogUtils.showSearchScreenErrorDialog("Molim vas ispunite barem jedno polje");
-            clear();
         }
 
         else {
 
             try
             {
-                 temp.addAll(HospitalEoApplication.getApi().patientSearch(name,oib,diagnosis));
+                 temp.addAll(HospitalEoApplication.getApi().patientSearch(name,oib,diagnosis,selectedDepartmentId.get()));
             }catch(Exception ex)
             {
                 DialogUtils.showDatabaseErrorDialog("Greska pri pretrazi za pacijentom");

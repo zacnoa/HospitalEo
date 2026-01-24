@@ -42,7 +42,8 @@ public enum DoctorQueries {
                 WHERE
                     ( ? = '' OR LOWER(p.name) LIKE LOWER(CONCAT('%', ?, '%')) )
                 AND ( ? = '' OR p.oib = ? )
-                AND ( ? = '' OR LOWER(d.specialty) LIKE LOWER(CONCAT('%', ?, '%')) );
+                AND ( ? = '' OR LOWER(d.specialty) LIKE LOWER(CONCAT('%', ?, '%')) )
+                AND (? IS NULL OR d.departmentId = ?)
                 """);
 
 

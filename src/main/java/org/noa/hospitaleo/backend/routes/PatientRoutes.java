@@ -73,7 +73,7 @@ public class PatientRoutes {
         return patients;
     }
 
-    public static List<Patient> patientSearch(Connection connection, String name, String oib, String diagnosis) throws SQLException {
+    public static List<Patient> patientSearch(Connection connection, String name, String oib, String diagnosis,UUID departmentId) throws SQLException {
         List<Patient> patients = new ArrayList<>();
         String query = PatientQueries.PATIENT_SEARCH.getQuery();
 
@@ -86,6 +86,9 @@ public class PatientRoutes {
 
             statement.setString(5, diagnosis);
             statement.setString(6, diagnosis);
+
+            statement.setObject(7, departmentId);
+            statement.setObject(8, departmentId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
 

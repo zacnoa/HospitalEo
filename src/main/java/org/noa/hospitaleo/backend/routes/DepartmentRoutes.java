@@ -8,8 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DepartmentRoutes {
 
@@ -39,5 +38,30 @@ public class DepartmentRoutes {
             statement.setObject(2, department.getId());
             statement.executeUpdate();
         }
+    }
+    public static Map<String,Integer> getDepartmentStatistics(Connection connection, UUID departmentId) throws SQLException
+    {
+        Map<String,Integer> statistics = new HashMap<>();
+        Integer doctorCount = 0;
+        Integer patientCount = 0;
+        Integer roomCount = 0;
+        String query= DepartmentQueries.GET_STATISTICS.getQuery();
+        try(PreparedStatement statement = connection.prepareStatement(query))
+        {
+            statement.setObject(1,departmentId);
+            statement.setObject(2,departmentId);
+            statement.setObject(3,departmentId);
+            try(ResultSet rs = statement.executeQuery())
+            {
+                rs.next();
+                doctorCount = rs.getInt("doctors");
+                roomCount = rs.getInt("rooms");
+                patientCount = rs.getInt("patients");
+            }
+        }
+        statistics.put("doctors", doctorCount);
+        statistics.put("patients", patientCount);
+        statistics.put("rooms", roomCount);
+        return statistics;
     }
 }

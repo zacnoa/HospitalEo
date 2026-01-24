@@ -33,6 +33,7 @@ public class HospitalEoApplication extends Application {
             stage.show();
         } catch (IOException ex) {
             DialogUtils.showIOError("Greska pri otvaranju aplikacije");
+            ex.printStackTrace();
             logger.error(ex.getMessage(), ex);
         }catch(SQLException ex)
         {
