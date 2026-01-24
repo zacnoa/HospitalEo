@@ -1034,3 +1034,7 @@ org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name or passwor
 	at javafx.graphics@21.0.6/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
 	at javafx.graphics@21.0.6/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:185)
 	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-01-24 13:18:17,985 INFO [virtual-44] o.n.h.HospitalEoApplication [BackupManager.java:36] Backup uspjesno stvoren
+2026-01-24 13:18:22,969 INFO [virtual-54] o.n.h.HospitalEoApplication [BackupManager.java:36] Backup uspjesno stvoren
+2026-01-24 13:18:27,954 INFO [virtual-55] o.n.h.HospitalEoApplication [BackupManager.java:36] Backup uspjesno stvoren
+2026-01-24 13:18:32,965 INFO [virtual-56] o.n.h.HospitalEoApplication [BackupManager.java:36] Backup uspjesno stvoren
