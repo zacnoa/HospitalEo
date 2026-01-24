@@ -67,7 +67,7 @@ public class DoctorSearchScreenController {
                 new SimpleStringProperty(param.getValue().getSpecialty())
         );
         try {
-            departmentComboBox.setUp(DatabaseUtils.departmentsIdentifiableObservableList(HospitalEoApplication.getApi().getConnection()),selectedDepartmentId,"Departments");
+            departmentComboBox.setUp(DatabaseUtils.departmentsIdentifiableObservableList(HospitalEoApplication.getApi().getConnection()),selectedDepartmentId,"Department");
         } catch (SQLException e) {
             HospitalEoApplication.logger.error(e.getMessage());
             DialogUtils.showDatabaseErrorDialog("Greska pri dohvacanju departments");
