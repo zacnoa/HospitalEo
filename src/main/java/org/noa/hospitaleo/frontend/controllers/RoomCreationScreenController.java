@@ -64,6 +64,8 @@ public class RoomCreationScreenController {
        {
            DialogUtils.showDatabaseErrorDialog("Greska pri zapisivanju sobe");
            HospitalEoApplication.logger.error(e.getMessage(),e);
+           reset();
+           return false;
        }
 
 

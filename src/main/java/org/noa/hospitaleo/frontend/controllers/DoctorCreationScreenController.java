@@ -84,6 +84,8 @@ public class DoctorCreationScreenController {
         {
             DialogUtils.showDatabaseErrorDialog("Greska pri pisanju doktora");
             HospitalEoApplication.logger.error(e.getMessage(),e);
+            reset();
+            return false;
         }
         DialogUtils.showEntityCreationSuccessDialog("Uspjesno je zapisan doktor:"+" "+doctorName.getText());
         HospitalEoApplication.logger.info("Uspjesno je zapisan doktor:{}",doctorName.getText());

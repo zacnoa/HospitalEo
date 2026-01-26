@@ -22,10 +22,18 @@ public class DatabaseAPI {
     {
         DepartmentRoutes.insertDepartment(connection,department);
     }
+    public Department getDepartment(UUID departmentId) throws SQLException
+    {
+        return DepartmentRoutes.getDepartment(connection,departmentId);
+    }
     public void addRoom(Room room,UUID departmentId) throws SQLException
     {
         RoomRoutes.insertRoom(connection,room,departmentId);
 
+    }
+    public Room getRoom(UUID roomId) throws SQLException
+    {
+        return RoomRoutes.getRoom(connection,roomId);
     }
     public List<Department> getAllDepartments() throws SQLException
     {
@@ -45,6 +53,10 @@ public class DatabaseAPI {
             throw e;
         }
 
+    }
+    public Doctor getDoctor(UUID doctorId) throws SQLException
+    {
+        return DoctorRoutes.getDoctor(connection,doctorId);
     }
     public void addPatient(Patient patient, UUID departmentId) throws SQLException
     {
@@ -99,6 +111,14 @@ public class DatabaseAPI {
     public Map<String,Integer> getDepartmentStatistics(Department department) throws SQLException
     {
        return DepartmentRoutes.getDepartmentStatistics(connection,department.getId());
+    }
+    public Patient getLatestPatient() throws SQLException
+    {
+        return PatientRoutes.getLatestPatient(connection);
+    }
+    public String getDepartmentNameByRoom(UUID roomId) throws SQLException
+    {
+        return DepartmentRoutes.getDepartmentNameByRoom(connection,roomId);
     }
 
 }

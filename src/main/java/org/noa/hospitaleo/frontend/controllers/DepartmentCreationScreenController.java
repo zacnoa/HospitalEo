@@ -34,6 +34,8 @@ public class DepartmentCreationScreenController {
         } catch (SQLException e) {
             DialogUtils.showDatabaseErrorDialog("Greska pri spremanju doktora u bazu");
             HospitalEoApplication.logger.error(e.getMessage(),e);
+            reset();
+            return false;
         }
 
 

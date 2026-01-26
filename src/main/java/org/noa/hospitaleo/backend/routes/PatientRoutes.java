@@ -16,7 +16,7 @@ public class PatientRoutes {
 
     private PatientRoutes() {}
     public static List<Patient> getDepartmentPatients(Connection connection, UUID departmentId) throws SQLException {
-        List<Patient> patients = new ArrayList<>();
+        List<Patient> patients;
         String query = PatientQueries.GET_DEPARTMENT_PATIENTS.getQuery();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -31,7 +31,7 @@ public class PatientRoutes {
     }
 
     public static Patient getPatient(Connection connection, UUID id) throws SQLException {
-        Patient temp = null;
+        Patient temp;
         String query = PatientQueries.GET_PATIENT.getQuery();
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -55,12 +55,13 @@ public class PatientRoutes {
             statement.setObject(4, patient.getDoctorId());
             statement.setString(5, patient.getStatus().getValue());
             statement.setString(6, patient.getDiagnosis());
+            statement.setObject(7, patient.getAdmittedAt());
             statement.executeUpdate();
         }
     }
 
     public static List<Patient> getRoomPatients(Connection connection, UUID roomId) throws SQLException {
-        List<Patient> patients = new ArrayList<>();
+        List<Patient> patients;
         String query = PatientQueries.GET_ROOM_PATIENTS.getQuery();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -74,7 +75,7 @@ public class PatientRoutes {
     }
 
     public static List<Patient> patientSearch(Connection connection, String name, String oib, String diagnosis,UUID departmentId) throws SQLException {
-        List<Patient> patients = new ArrayList<>();
+        List<Patient> patients;
         String query = PatientQueries.PATIENT_SEARCH.getQuery();
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -97,5 +98,18 @@ public class PatientRoutes {
             }
         }
         return patients;
+    }
+    public static Patient getLatestPatient(Connection connection) throws SQLException
+    {
+        Patient temp;
+        String query = PatientQueries.LATEST_PATIENT.getQuery();
+        try(PreparedStatement statement = connection.prepareStatement(query))
+        {
+            try(ResultSet rs = statement.executeQuery())
+            {
+                temp= PatientMapper.mapToPatient(rs);
+            }
+        }
+        return temp;
     }
 }

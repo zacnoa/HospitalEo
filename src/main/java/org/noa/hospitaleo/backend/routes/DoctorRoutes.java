@@ -27,7 +27,7 @@ public class DoctorRoutes {
         }
         return doctors;
     }
-    public static Doctor getDoctor(UUID doctorId,Connection connection) throws SQLException {
+    public static Doctor getDoctor(Connection connection, UUID doctorId) throws SQLException {
         Doctor temp = null;
         String query = DoctorQueries.GET_DOCTOR.getQuery();
 

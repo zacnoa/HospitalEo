@@ -136,7 +136,8 @@ CREATE TABLE PATIENTS (
     id UUID PRIMARY KEY NOT NULL,
     diagnosis VARCHAR(150) NOT NULL,
     status VARCHAR(40) NOT NULL
-        CHECK (status IN ('Hospitaliziran','Otpušten','Na pregledu')),
+    CHECK (status IN ('Hospitaliziran','Otpušten','Na pregledu')),
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     doctorId UUID NOT NULL,
     roomId UUID NOT NULL,
     departmentId UUID NOT NULL,

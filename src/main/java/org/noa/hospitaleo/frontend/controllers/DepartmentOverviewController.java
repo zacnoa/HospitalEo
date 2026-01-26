@@ -76,22 +76,22 @@ public class DepartmentOverviewController {
             nameLabel.setText(dept.getName());
             Thread.startVirtualThread(()->
             {
-                Map<String,Integer> stats = new HashMap<>();
                 try {
-                    stats = HospitalEoApplication.getApi().getDepartmentStatistics(dept);
+                    Map<String,Integer> stats = HospitalEoApplication.getApi().getDepartmentStatistics(dept);
+
+                    Platform.runLater(()->
+                    {
+                        patientsLabel.setText("Pacijenti: " + stats.get("patients"));
+                        doctorsLabel.setText("Doktori: " + stats.get("doctors"));
+                        roomsLabel.setText("Sobe: " + stats.get("rooms"));
+                    });
                 } catch (SQLException e) {
                     HospitalEoApplication.logger.error(e.getMessage(),e);
                     Platform.runLater(()->
                             DialogUtils.showDatabaseErrorDialog("Doslo je do greske kod skupljanja podataka za " + dept.getName() + " odjel")
                     );
                 }
-                Map<String, Integer> finalStats = stats;
-                Platform.runLater(()->
-                {
-                    patientsLabel.setText("Pacijenti: " + finalStats.get("patients"));
-                    doctorsLabel.setText("Doktori: " + finalStats.get("doctors"));
-                    roomsLabel.setText("Sobe: " + finalStats.get("rooms"));
-                });
+
             });
 
             setText(null);

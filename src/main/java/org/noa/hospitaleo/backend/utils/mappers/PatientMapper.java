@@ -26,7 +26,8 @@ public class PatientMapper {
                     resultSet.getObject("doctorId", UUID.class),
                     resultSet.getObject("roomId", UUID.class),
                     status,
-                    resultSet.getObject("id", UUID.class)
+                    resultSet.getObject("id", UUID.class),
+                    resultSet.getObject("createdAt", java.time.LocalDateTime.class)
             );
             patients.add(temp);
         }
@@ -45,7 +46,8 @@ public class PatientMapper {
                     rs.getObject("doctorId", UUID.class),
                     rs.getObject("roomId", UUID.class),
                     status,
-                    rs.getObject("id", UUID.class)
+                    rs.getObject("id", UUID.class),
+                    rs.getObject("createdAt", java.time.LocalDateTime.class)
             );
         }
         return temp;

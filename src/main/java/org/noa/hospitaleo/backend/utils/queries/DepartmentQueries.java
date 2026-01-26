@@ -15,7 +15,15 @@ public enum DepartmentQueries {
             (SELECT COUNT(*) FROM PATIENTS WHERE departmentId=?) AS patients
             """
 
-    );
+    ),
+    GET_DEPARTMENT("SELECT * FROM DEPARTMENTS WHERE id = ?"),
+    GET_DEPARTMENT_NAME_BY_ROOM("""
+            SELECT d.name
+            FROM ROOMS r
+            JOIN DEPARTMENTS d ON r.departmentID = d.id
+            WHERE r.id = ?;
+            """);
+
     private final String query;
     DepartmentQueries(String query) {
       this.query = query;

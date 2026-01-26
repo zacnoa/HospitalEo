@@ -40,4 +40,8 @@ public class MenuController {
     public void showDepartmentCreationScreen() {
         ScreenNavigator.ChangeScene(Screen.DEPARTMENT_CREATION);
     }
+    public void showLatestPatientScreen()
+    {
+        ScreenNavigator.ChangeScene(Screen.LATEST_PATIENT);
+    }
 }

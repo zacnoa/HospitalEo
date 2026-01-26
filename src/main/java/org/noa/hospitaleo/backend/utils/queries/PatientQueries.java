@@ -10,7 +10,8 @@ public enum PatientQueries {
                        PATIENTS.doctorId,
                        PATIENTS.departmentId,
                        PATIENTS.roomId,
-                       PATIENTS.status
+                       PATIENTS.status,
+                       PATIENTS.createdAt
                 FROM PATIENTS
                 JOIN PERSONS ON PATIENTS.id = PERSONS.id
                 WHERE PATIENTS.departmentId = ?
@@ -23,14 +24,15 @@ public enum PatientQueries {
                        PATIENTS.doctorId,
                        PATIENTS.departmentId,
                        PATIENTS.roomId,
-                       PATIENTS.status
+                       PATIENTS.status,
+                       PATIENTS.createdAt
                 FROM PATIENTS
                 JOIN PERSONS ON PATIENTS.id = PERSONS.id
                 WHERE PATIENTS.id = ?
                 """),
     INSERT_PATIENT("""
-                INSERT INTO PATIENTS (id, departmentId, roomId, doctorId, status, diagnosis)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO PATIENTS (id, departmentId, roomId, doctorId, status, diagnosis,createdAt)
+                VALUES (?, ?, ?, ?, ?, ?,?)
                 """),
     GET_ROOM_PATIENTS("""
                 SELECT PERSONS.name,
@@ -40,7 +42,8 @@ public enum PatientQueries {
                        PATIENTS.doctorId,
                        PATIENTS.departmentId,
                        PATIENTS.roomId,
-                       PATIENTS.status
+                       PATIENTS.status,
+                       PERSONS.createdAt
                 FROM PATIENTS
                 JOIN PERSONS ON PATIENTS.id = PERSONS.id
                 WHERE PATIENTS.roomId = ?
@@ -53,7 +56,8 @@ public enum PatientQueries {
                     pat.diagnosis,
                     pat.status,
                     pat.doctorId,
-                    pat.roomId
+                    pat.roomId,
+                    pat.createdAt
                 FROM PATIENTS pat
                 JOIN PERSONS p ON pat.id = p.id
                 WHERE
@@ -61,7 +65,14 @@ public enum PatientQueries {
                 AND ( ? = '' OR p.oib = ? )
                 AND ( ? = '' OR LOWER(pat.diagnosis) LIKE LOWER(CONCAT('%', ?, '%')) )
                 AND ( ? IS NULL OR pat.departmentId = ?)
-                """);
+                """),
+    LATEST_PATIENT("""
+            SELECT *
+            FROM PATIENTS
+            JOIN PERSONS ON PATIENTS.id = PERSONS.id
+            ORDER BY createdAt DESC
+            LIMIT 1;
+            """);
 
     private final String query;
     PatientQueries(String query)

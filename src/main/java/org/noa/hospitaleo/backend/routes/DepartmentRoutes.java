@@ -39,6 +39,37 @@ public class DepartmentRoutes {
             statement.executeUpdate();
         }
     }
+    public static Department getDepartment(Connection connection, UUID departmentId) throws SQLException
+    {
+        String query= DepartmentQueries.GET_DEPARTMENT.getQuery();
+        Department department;
+        try(PreparedStatement statement = connection.prepareStatement(query))
+        {
+            statement.setObject(1,departmentId);
+            try(ResultSet rs = statement.executeQuery())
+            {
+                rs.next();
+                department = DepartmentMapper.mapToDepartment(rs);
+            }
+        }
+        return department;
+    }
+    public static String getDepartmentNameByRoom(Connection connection,UUID roomId) throws SQLException
+    {
+        String query= DepartmentQueries.GET_DEPARTMENT_NAME_BY_ROOM.getQuery();
+        String departmentName;
+        try(PreparedStatement statement = connection.prepareStatement(query))
+        {
+            statement.setObject(1,roomId);
+            try(ResultSet rs = statement.executeQuery())
+            {
+                rs.next();
+                departmentName = rs.getString(1);
+            }
+        }
+        return departmentName;
+
+    }
     public static Map<String,Integer> getDepartmentStatistics(Connection connection, UUID departmentId) throws SQLException
     {
         Map<String,Integer> statistics = new HashMap<>();

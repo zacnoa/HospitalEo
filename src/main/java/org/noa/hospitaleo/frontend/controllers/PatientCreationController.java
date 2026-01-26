@@ -147,6 +147,8 @@ public class PatientCreationController {
               {
                   HospitalEoApplication.logger.error(e.getMessage(),e);
                   DialogUtils.showDatabaseErrorDialog("Doslo je do pogreske pri zapisivanju underagepatient");
+                  reset();
+                  return false;
               }
 
          }
@@ -163,6 +165,8 @@ public class PatientCreationController {
             } catch (SQLException e) {
                 DialogUtils.showDatabaseErrorDialog("Greska pri spremanju pacijenta");
                 HospitalEoApplication.logger.error(e.getMessage(),e);
+                reset();
+                return false;
             }
 
         }

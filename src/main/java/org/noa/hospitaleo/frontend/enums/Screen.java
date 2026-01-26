@@ -58,6 +58,12 @@ public enum Screen {
             "Department Creation",
             "Došlo je do greške pri prikazivanju ekrana za kreiranje odjela",
             false
+    ),
+    LATEST_PATIENT(
+            "latest-patient.fxml",
+            "Latest Patient",
+            "Doslo je do greske pri prikazivanju zadnjeg unesenog pacijenta",
+            false
     );
 
     private final String fxml;

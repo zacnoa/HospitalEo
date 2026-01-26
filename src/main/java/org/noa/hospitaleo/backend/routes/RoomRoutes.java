@@ -16,7 +16,7 @@ public class RoomRoutes {
     private RoomRoutes() {}
 
     public static List<Room> getDepartmentRooms(UUID departmentId, Connection connection) throws SQLException {
-        List<Room> rooms = new ArrayList<>();
+        List<Room> rooms;
         String query = """
                 SELECT ROOMS.id,
                        ROOMS.name
